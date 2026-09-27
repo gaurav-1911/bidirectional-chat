@@ -115,17 +115,22 @@
 }
 
 .friend-avatar {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  max-width: 42px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50% !important;
+  overflow: hidden !important;
   background: var(--accent-gradient, linear-gradient(135deg, #6366f1 0%, #a855f7 100%));
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   font-weight: 700;
+  font-size: 0.95rem;
   position: relative;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -194,5 +199,7 @@
     width: 38px !important;
     height: 38px !important;
     min-width: 38px !important;
+    max-width: 38px !important;
+    border-radius: 50% !important;
   }
 }
