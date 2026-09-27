@@ -92,6 +92,7 @@ export function SettingsView({ currentUser, onUpdateUser, onLogout, initialCateg
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -345,9 +346,9 @@ export function SettingsView({ currentUser, onUpdateUser, onLogout, initialCateg
   ];
 
   return (
-    <>
+    <div className="settings-container">
       {/* Settings Sidebar */}
-      <div className="sidebar-container" style={{ width: '300px', flexShrink: 0, borderRight: '1px solid var(--border-color)' }}>
+      <div className="settings-sidebar">
         <div className="sidebar-logo">
           <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -357,53 +358,42 @@ export function SettingsView({ currentUser, onUpdateUser, onLogout, initialCateg
             Settings
           </h2>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '16px' }}>
+        <div className="settings-nav-list">
           {categories.map(c => {
             const isActive = activeCategory === c.id;
             return (
               <div
                 key={c.id}
+                className={`settings-nav-item ${isActive ? 'active' : ''}`}
                 onClick={() => setActiveCategory(c.id as SettingsCategory)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '14px',
-                  padding: '12px 16px', borderRadius: '12px', cursor: 'pointer',
-                  background: isActive
-                    ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.12))'
-                    : 'transparent',
-                  border: isActive
-                    ? '1px solid rgba(99, 102, 241, 0.4)'
-                    : '1px solid transparent',
-                  fontWeight: isActive ? '600' : '500',
-                  color: isActive ? 'var(--accent-color, #6366f1)' : 'var(--text-muted)',
-                  transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: isActive ? '0 2px 8px rgba(99, 102, 241, 0.15)' : 'none',
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = 'rgba(99, 102, 241, 0.08)';
-                    e.currentTarget.style.color = 'var(--text-main)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = 'var(--text-muted)';
-                  }
-                }}
               >
                 <span style={{ display: 'flex', color: isActive ? 'var(--accent-color, #6366f1)' : 'currentColor', opacity: isActive ? 1 : 0.75 }}>
                   {c.icon}
                 </span>
-                {c.label}
+                <span>{c.label}</span>
               </div>
             );
           })}
-        </div>
 
+          <div
+            className="settings-nav-item settings-logout-btn"
+            onClick={() => setShowLogoutConfirm(true)}
+            title="Log out of your account"
+          >
+            <span style={{ display: 'flex' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </span>
+            <span>Log Out</span>
+          </div>
+        </div>
       </div>
 
       {/* Settings Content */}
-      <div className="chat-window" style={{ overflowY: 'auto', padding: '40px 48px' }}>
+      <div className="settings-content-area">
 
         {/* Toast Messages */}
         {successMsg && (
@@ -1242,6 +1232,21 @@ export function SettingsView({ currentUser, onUpdateUser, onLogout, initialCateg
           </div>
         </div>
       )}
-    </>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <ConfirmModal
+          title="Log Out"
+          message="Are you sure you want to log out of your account?"
+          confirmText="Log Out"
+          isDestructive={true}
+          onConfirm={() => {
+            setShowLogoutConfirm(false);
+            onLogout();
+          }}
+          onCancel={() => setShowLogoutConfirm(false)}
+        />
+      )}
+    </div>
   );
 }

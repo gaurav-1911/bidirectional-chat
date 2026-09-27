@@ -71,14 +71,17 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    import('./services/authService').then(m => m.logoutApi());
+    import('./services/authService').then(m => m.logoutApi()).catch(() => {});
     setCurrentUser(null);
     setSelectedFriend(null);
     setSelectedGroup(null);
+    setActiveTab('chats');
+    setSettingsCategory('profile');
     localStorage.removeItem('auth_token');
     localStorage.removeItem('chat_user');
     localStorage.removeItem('selected_friend');
     localStorage.removeItem('selected_group');
+    window.scrollTo({ top: 0, behavior: 'instant' as any });
   };
 
   const handleUpdateCurrentUser = (updatedUser: UserProfile) => {

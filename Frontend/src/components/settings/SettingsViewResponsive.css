@@ -1,22 +1,107 @@
 /* ==========================================================================
    SettingsViewResponsive.css
-   Responsive Styles for Settings View Component
+   Master Responsive Styles for Settings View Component
    ========================================================================== */
 
-/* Mobile Stacked Layout (< 768px) */
+/* Universal Base Layout */
+.settings-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-dark, #0b1120);
+  overflow: hidden;
+  position: relative;
+}
+
+.settings-sidebar {
+  width: 300px;
+  min-width: 300px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sidebar-bg, #0f172a);
+  height: 100%;
+}
+
+.settings-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.settings-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  font-weight: 500;
+  color: var(--text-muted, #94a3b8);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.settings-nav-item:hover {
+  background-color: rgba(99, 102, 241, 0.08);
+  color: var(--text-main, #f8fafc);
+}
+
+.settings-nav-item.active {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.12));
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--accent-color, #6366f1);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+}
+
+.settings-logout-btn {
+  margin-top: auto;
+  color: #f87171 !important;
+}
+
+.settings-logout-btn:hover {
+  background-color: rgba(239, 68, 68, 0.12) !important;
+  color: #ef4444 !important;
+}
+
+.settings-content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 48px;
+  height: 100%;
+  background-color: var(--bg-dark, #0b1120);
+}
+
+/* ==========================================================================
+   Mobile Stacked Layout (< 768px)
+   ========================================================================== */
 @media screen and (max-width: 767px) {
   .settings-container {
     flex-direction: column !important;
-    height: calc(100dvh - 60px) !important;
+    height: calc(100dvh - 56px) !important;
     overflow-y: auto !important;
   }
 
   .settings-sidebar {
     width: 100% !important;
     min-width: 100% !important;
+    height: auto !important;
+    flex-shrink: 0 !important;
     border-right: none !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    padding: 12px !important;
+    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08)) !important;
+    padding: 8px 12px !important;
+  }
+
+  .settings-sidebar .sidebar-logo {
+    display: none !important; /* Managed by mobile-top-navbar */
   }
 
   .settings-nav-list {
@@ -24,50 +109,42 @@
     flex-direction: row !important;
     overflow-x: auto !important;
     gap: 8px !important;
-    padding-bottom: 8px !important;
+    padding: 4px 0 !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .settings-nav-list::-webkit-scrollbar {
+    display: none;
   }
 
   .settings-nav-item {
     white-space: nowrap !important;
     padding: 8px 14px !important;
     font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
+    min-height: 40px !important;
+    border-radius: 10px !important;
+  }
+
+  .settings-logout-btn {
+    margin-top: 0 !important;
+    background: rgba(239, 68, 68, 0.08) !important;
+    border: 1px solid rgba(239, 68, 68, 0.2) !important;
   }
 
   .settings-content-area {
     flex: 1 !important;
     padding: 16px 14px 40px 14px !important;
     overflow-y: visible !important;
-  }
-
-  .settings-section-card {
-    padding: 14px !important;
-    margin-bottom: 16px !important;
-    border-radius: 16px !important;
-  }
-
-  .settings-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 10px !important;
-    padding: 12px 0 !important;
-  }
-
-  .settings-input,
-  .settings-select {
-    width: 100% !important;
-    max-width: 100% !important;
-    font-size: 0.9rem !important;
+    height: auto !important;
   }
 }
 
-/* 1. Small Mobile (320px - 374px) */
-@media screen and (max-width: 374px) {
+/* 1. Small Mobile (<= 320px) */
+@media screen and (max-width: 320px) {
   .settings-content-area {
     padding: 10px 8px 30px 8px !important;
-  }
-
-  .settings-section-card {
-    padding: 10px !important;
   }
 
   .settings-nav-item {
@@ -79,23 +156,11 @@
 /* 2. Tablet (768px - 1023px) */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .settings-sidebar {
-    width: 240px !important;
-    min-width: 240px !important;
+    width: 250px !important;
+    min-width: 250px !important;
   }
 
   .settings-content-area {
-    padding: 24px 20px !important;
-  }
-}
-
-/* 3. Laptop & Desktop (1024px+) */
-@media screen and (min-width: 1024px) {
-  .settings-sidebar {
-    width: 280px !important;
-    min-width: 280px !important;
-  }
-
-  .settings-content-area {
-    padding: 32px 40px !important;
+    padding: 24px 24px !important;
   }
 }
