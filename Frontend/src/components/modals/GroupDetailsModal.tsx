@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { UserProfile, GroupProfile } from '../types/chat.types';
-import { updateGroupApi, leaveGroupApi } from '../services/groupService';
-import { getAllUsersApi, searchUsersApi } from '../services/userService';
+import { UserProfile, GroupProfile } from '../../types/chat.types';
+import { updateGroupApi, leaveGroupApi } from '../../services/groupService';
+import { getAllUsersApi, searchUsersApi } from '../../services/userService';
 import { ConfirmModal } from './ConfirmModal';
 import './GroupDetailsModalResponsive.css';
 

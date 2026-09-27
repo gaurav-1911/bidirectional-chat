@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { UserProfile, ScreenshotItem } from '../types/chat.types';
-import { getSocket } from '../services/socket';
+import { UserProfile, ScreenshotItem } from '../../types/chat.types';
+import { getSocket } from '../../services/socket';
 import {
   getMonitoringStatsApi,
   getUserScreenshotsApi,
   saveScreenshotApi,
   deleteScreenshotApi,
   MonitoringStats,
-} from '../services/monitoringService';
-import { resolveMediaUrl } from '../utils/url.util';
+} from '../../services/monitoringService';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './LiveMonitoringViewResponsive.css';
 
 interface LiveMonitoringViewProps {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { UserProfile } from '../types/chat.types';
-import { getAllUsersApi, searchUsersApi } from '../services/userService';
-import { getSocket } from '../services/socket';
+import { UserProfile } from '../../types/chat.types';
+import { getAllUsersApi, searchUsersApi } from '../../services/userService';
+import { getSocket } from '../../services/socket';
 import './ChatsSidebarResponsive.css';
 
 interface PeopleSidebarProps {

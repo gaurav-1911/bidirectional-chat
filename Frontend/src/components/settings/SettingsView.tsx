@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { UserProfile, UserSettings } from '../types/chat.types';
-import { updateSettingsApi, clearChatHistoryApi } from '../services/settingsService';
-import { uploadFileApi, updateAvatarApi, updateProfileApi, sendEmailOtpApi, verifyEmailOtpApi } from '../services/userService';
-import { ConfirmModal } from './ConfirmModal';
-import { CustomSelect } from './CustomSelect';
+import { UserProfile, UserSettings } from '../../types/chat.types';
+import { updateSettingsApi, clearChatHistoryApi } from '../../services/settingsService';
+import { uploadFileApi, updateAvatarApi, updateProfileApi, sendEmailOtpApi, verifyEmailOtpApi } from '../../services/userService';
+import { ConfirmModal } from '../modals/ConfirmModal';
+import { CustomSelect } from '../modals/CustomSelect';
 import './SettingsViewResponsive.css';
 
 export type SettingsCategory = 'profile' | 'privacy' | 'notifications' | 'appearance' | 'chat' | 'other';

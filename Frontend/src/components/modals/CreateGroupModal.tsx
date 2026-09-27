@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { UserProfile, GroupProfile } from '../types/chat.types';
-import { getAllUsersApi, searchUsersApi } from '../services/userService';
-import { createGroupApi } from '../services/groupService';
+import { UserProfile, GroupProfile } from '../../types/chat.types';
+import { getAllUsersApi, searchUsersApi } from '../../services/userService';
+import { createGroupApi } from '../../services/groupService';
 import './GroupDetailsModalResponsive.css';
 
 interface CreateGroupModalProps {

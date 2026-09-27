@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProfile } from '../types/chat.types';
+import { UserProfile } from '../../types/chat.types';
 import './MainNavBarResponsive.css';
 
 export type TabType = 'chats' | 'people' | 'groups' | 'calls' | 'monitoring' | 'settings';

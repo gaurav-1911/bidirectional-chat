@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { UserProfile, GroupProfile, RecentGroup } from '../types/chat.types';
-import { getUserGroupsApi } from '../services/groupService';
+import { UserProfile, GroupProfile, RecentGroup } from '../../types/chat.types';
+import { getUserGroupsApi } from '../../services/groupService';
 import './ChatsSidebarResponsive.css';
 
 interface GroupsSidebarProps {

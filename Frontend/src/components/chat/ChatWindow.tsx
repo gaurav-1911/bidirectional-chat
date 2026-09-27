@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { MessageList } from './MessageList';
 import { MessageInput } from './MessageInput';
-import { ForwardModal } from './ForwardModal';
-import { UserProfile, ChatMessage, GroupProfile, ChatTarget, CallRecord } from '../types/chat.types';
+import { ForwardModal } from '../modals/ForwardModal';
+import { UserProfile, ChatMessage, GroupProfile, ChatTarget, CallRecord } from '../../types/chat.types';
 import './ChatWindowResponsive.css';
 
 interface ChatWindowProps {

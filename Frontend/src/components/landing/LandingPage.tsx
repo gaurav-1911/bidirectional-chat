@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { AuthModal } from './AuthModal';
+import { AuthModal } from '../modals/AuthModal';
 import { ParticleBackground } from './ParticleBackground';
-import { Navbar } from './landing/Navbar';
-import { HeroSection } from './landing/HeroSection';
-import { FeaturesSection } from './landing/FeaturesSection';
-import { TechSection } from './landing/TechSection';
-import { HowItWorksSection } from './landing/HowItWorksSection';
-import { SecuritySection } from './landing/SecuritySection';
-import { FaqSection } from './landing/FaqSection';
-import { Footer } from './landing/Footer';
-import { BackToTop } from './landing/BackToTop';
-import { UserProfile } from '../types/chat.types';
+import { Navbar } from './Navbar';
+import { HeroSection } from './HeroSection';
+import { FeaturesSection } from './FeaturesSection';
+import { TechSection } from './TechSection';
+import { HowItWorksSection } from './HowItWorksSection';
+import { SecuritySection } from './SecuritySection';
+import { FaqSection } from './FaqSection';
+import { Footer } from './Footer';
+import { BackToTop } from './BackToTop';
+import { UserProfile } from '../../types/chat.types';
 import './LandingPageResponsive.css';
 
 interface LandingPageProps {

@@ -1,22 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UserProfile } from './types/chat.types';
-import { LandingPage } from './components/LandingPage';
-import { AuthModal } from './components/AuthModal';
-import { ChatsSidebar } from './components/ChatsSidebar';
-import { PeopleSidebar } from './components/PeopleSidebar';
-import { ChatWindow } from './components/ChatWindow';
-import { CallModal } from './components/CallModal';
+import {
+  LandingPage,
+  AuthModal,
+  ChatsSidebar,
+  PeopleSidebar,
+  ChatWindow,
+  CallModal,
+  MainNavBar,
+  TabType,
+  GroupsSidebar,
+  CreateGroupModal,
+  GroupDetailsModal,
+  CallsPlaceholder,
+  CallsSidebar,
+  SettingsView,
+  SettingsCategory,
+  LiveMonitoringView,
+  ScreenShareConsentModal,
+} from './components';
 import { useSocket } from './hooks/useSocket';
 import { useWebRTC } from './hooks/useWebRTC';
-import { MainNavBar, TabType } from './components/MainNavBar';
-import { GroupsSidebar } from './components/GroupsSidebar';
-import { CreateGroupModal } from './components/CreateGroupModal';
-import { GroupDetailsModal } from './components/GroupDetailsModal';
-import { CallsPlaceholder } from './components/Placeholders';
-import { CallsSidebar } from './components/CallsSidebar';
-import { SettingsView, SettingsCategory } from './components/SettingsView';
-import { LiveMonitoringView } from './components/LiveMonitoringView';
-import { ScreenShareConsentModal } from './components/ScreenShareConsentModal';
 import { useMonitoringStreamer } from './hooks/useMonitoringStreamer';
 import { getSocket } from './services/socket';
 import { getUserByIdApi } from './services/userService';

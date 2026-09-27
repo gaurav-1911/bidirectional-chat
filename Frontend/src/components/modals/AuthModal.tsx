@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { UserProfile } from '../types/chat.types';
-import { registerApi, loginApi, googleAuthApi } from '../services/authService';
+import { UserProfile } from '../../types/chat.types';
+import { registerApi, loginApi, googleAuthApi } from '../../services/authService';
 import './AuthModalResponsive.css';
 
 interface AuthModalProps {
