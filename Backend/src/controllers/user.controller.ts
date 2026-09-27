@@ -283,19 +283,26 @@ export const getRecentChatUsers = async (req: Request, res: Response): Promise<v
     const isMongoId = mongoose.Types.ObjectId.isValid(userId);
     const userObjectId = isMongoId ? new mongoose.Types.ObjectId(userId) : null;
 
-    // 1. Find all active messages where this user is sender or receiver (not deleted for this user)
+    // 1. Find recent messages with lean projection (limited to 250 for instant response)
     const messages = await MessageModel.find({
       $or: [{ senderId: userId }, { receiverId: userId }],
       deletedFor: { $ne: userId },
-    }).sort({ createdAt: -1 }).lean().catch(() => []);
+    })
+      .select('senderId receiverId message fileUrl isDeletedForEveryone createdAt')
+      .sort({ createdAt: -1 })
+      .limit(250)
+      .lean()
+      .catch(() => []);
 
-    // 2. Find all calls involving this user
+    // 2. Find recent calls involving this user
     const callFilter = userObjectId
       ? { $or: [{ callerId: userObjectId }, { receiverId: userObjectId }] }
       : { $or: [{ callerId: userId }, { receiverId: userId }] };
 
     const calls = await CallModel.find(callFilter)
+      .select('callerId receiverId callType status startedAt endedAt createdAt')
       .sort({ createdAt: -1 })
+      .limit(50)
       .lean()
       .catch(() => []);
 
@@ -312,7 +319,7 @@ export const getRecentChatUsers = async (req: Request, res: Response): Promise<v
       }
     });
 
-    // Process calls (compare with message time or add if no message exists)
+    // Process calls
     calls.forEach((call: any) => {
       const callerIdStr = call.callerId?.toString();
       const receiverIdStr = call.receiverId?.toString();
@@ -340,8 +347,9 @@ export const getRecentChatUsers = async (req: Request, res: Response): Promise<v
       }
     });
 
+    const targetUserIds = Array.from(recentChatsMap.keys()).filter((id) => mongoose.Types.ObjectId.isValid(id));
     const recentUsers = await UserModel.find({
-      _id: { $in: Array.from(recentChatsMap.keys()) }
+      _id: { $in: targetUserIds }
     }).select('-password').lean();
 
     const data = recentUsers.map((user: any) => ({

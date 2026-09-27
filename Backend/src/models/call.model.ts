@@ -14,8 +14,8 @@ export interface ICall extends Document {
 
 const CallSchema: Schema = new Schema(
   {
-    callerId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    receiverId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    callerId: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    receiverId: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
     callType: { type: String, enum: ['voice', 'video'], required: true },
     status: { 
       type: String, 
@@ -29,4 +29,10 @@ const CallSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+// High-performance compound indexes for user call logs and active call lookups
+CallSchema.index({ callerId: 1, createdAt: -1 });
+CallSchema.index({ receiverId: 1, createdAt: -1 });
+CallSchema.index({ callerId: 1, receiverId: 1, createdAt: -1 });
+
 export const CallModel = mongoose.model<ICall>('Call', CallSchema);
+

@@ -200,7 +200,31 @@ export function useSocket(currentUser: UserProfile | null, selectedTarget: ChatT
       if (seenIds.current.has(msgId)) return;
       
       seenIds.current.add(msgId);
-      setMessages((prev) => [...prev, formatted]);
+
+      // If this message was sent by us, reconcile with our optimistic temp message
+      if (data.senderId === currentUser._id) {
+        setMessages((prev) => {
+          const tempIndex = prev.findIndex(
+            (m) =>
+              m.id.startsWith('temp-') &&
+              m.senderId === currentUser._id &&
+              m.message === formatted.message &&
+              (m.fileUrl || '') === (formatted.fileUrl || '')
+          );
+          if (tempIndex !== -1) {
+            const next = [...prev];
+            next[tempIndex] = formatted;
+            return next;
+          }
+          if (prev.some((m) => m.id === formatted.id)) return prev;
+          return [...prev, formatted];
+        });
+      } else {
+        setMessages((prev) => {
+          if (prev.some((m) => m.id === formatted.id)) return prev;
+          return [...prev, formatted];
+        });
+      }
 
       // Play sound and trigger notifications if enabled in user settings
       if (data.senderId !== currentUser._id) {
@@ -366,13 +390,38 @@ export function useSocket(currentUser: UserProfile | null, selectedTarget: ChatT
     }
   }, [currentUser, conversationId]);
 
-  // Send a direct message
+  // Send a direct message with instant 0ms optimistic UI rendering
   const sendMessage = useCallback(
     (messageText: string, fileData?: { fileUrl: string; fileName: string; fileType: string }, replyTo?: string) => {
       if (!currentUser || !selectedTarget || !isConnected) return;
       
       const socket = getSocket();
       const isGroup = 'members' in selectedTarget;
+
+      const tempId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
+      // Construct optimistic message object for 0ms local display
+      const optimisticMsg: ChatMessage = {
+        id: tempId,
+        conversationId: conversationId || '',
+        senderId: currentUser._id,
+        senderName: currentUser.username,
+        receiverId: isGroup ? undefined : selectedTarget._id,
+        receiverName: isGroup ? undefined : (selectedTarget as UserProfile).username,
+        groupId: isGroup ? selectedTarget._id : undefined,
+        message: messageText,
+        fileUrl: fileData?.fileUrl,
+        fileName: fileData?.fileName,
+        fileType: fileData?.fileType,
+        replyTo,
+        timestamp: new Date(),
+        status: 'sent',
+        reactions: {},
+      };
+
+      seenIds.current.add(tempId);
+      setMessages((prev) => [...prev, optimisticMsg]);
+      setLatestMessage(optimisticMsg);
 
       const newMsg = {
         conversationId,

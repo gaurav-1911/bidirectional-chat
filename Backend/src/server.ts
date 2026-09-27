@@ -14,13 +14,20 @@ import { redisPubClient, redisSubClient } from './config/redis';
 // Create HTTP server using createServer(app)
 const httpServer = createServer(app);
 
-// Attach Socket.IO to HTTP server with CORS
+// Attach Socket.IO to HTTP server with optimized real-time latency settings
 const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
   cors: {
     origin: config.corsOrigin,
     methods: ['GET', 'POST'],
     credentials: true,
   },
+  pingTimeout: 20000,
+  pingInterval: 10000,
+  transports: ['websocket', 'polling'], // Prefer WebSocket immediately for lowest latency
+  perMessageDeflate: {
+    threshold: 1024, // Compress binary and text packets over 1KB
+  },
+  maxHttpBufferSize: 1e7, // 10MB buffer
 });
 
 // Attach Redis adapter if Redis Pub/Sub is active

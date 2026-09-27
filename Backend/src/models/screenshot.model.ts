@@ -26,6 +26,9 @@ const ScreenshotSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+// High-performance compound index for user screenshot history
+ScreenshotSchema.index({ targetUserId: 1, createdAt: -1 });
 ScreenshotSchema.index({ createdAt: -1 });
 
 export const ScreenshotModel = mongoose.model<IScreenshot>('Screenshot', ScreenshotSchema);
+

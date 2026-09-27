@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { UserProfile } from './types/chat.types';
 import {
-  LandingPage,
-  AuthModal,
   ChatsSidebar,
   PeopleSidebar,
   ChatWindow,
-  CallModal,
   MainNavBar,
   TabType,
   GroupsSidebar,
-  CreateGroupModal,
-  GroupDetailsModal,
-  CallsPlaceholder,
   CallsSidebar,
-  SettingsView,
   SettingsCategory,
-  LiveMonitoringView,
-  ScreenShareConsentModal,
 } from './components';
+
+// Lazy load views & heavy modals on demand for optimal initial bundle & fast paint
+const LandingPage = lazy(() => import('./components/landing/LandingPage').then(m => ({ default: m.LandingPage })));
+const SettingsView = lazy(() => import('./components/settings/SettingsView').then(m => ({ default: m.SettingsView })));
+const LiveMonitoringView = lazy(() => import('./components/monitoring/LiveMonitoringView').then(m => ({ default: m.LiveMonitoringView })));
+const CallModal = lazy(() => import('./components/modals/CallModal').then(m => ({ default: m.CallModal })));
+const CreateGroupModal = lazy(() => import('./components/modals/CreateGroupModal').then(m => ({ default: m.CreateGroupModal })));
+const GroupDetailsModal = lazy(() => import('./components/modals/GroupDetailsModal').then(m => ({ default: m.GroupDetailsModal })));
+const ScreenShareConsentModal = lazy(() => import('./components/modals/ScreenShareConsentModal').then(m => ({ default: m.ScreenShareConsentModal })));
 import { useSocket } from './hooks/useSocket';
 import { useWebRTC } from './hooks/useWebRTC';
 import { useMonitoringStreamer } from './hooks/useMonitoringStreamer';
@@ -270,9 +270,19 @@ export default function App() {
     }
   }, [currentUser?.settings]);
 
-  // If not logged in, show SEO-optimized Landing Page with Auth flow
+  // If not logged in, show SEO-optimized Landing Page with Auth flow (Lazy Loaded)
   if (!currentUser) {
-    return <LandingPage onAuthSuccess={handleAuthSuccess} />;
+    return (
+      <Suspense
+        fallback={
+          <div style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0b1120', color: '#6366f1' }}>
+            <div className="spin-icon" style={{ width: 40, height: 40, border: '3px solid rgba(99,102,241,0.2)', borderTopColor: '#6366f1', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+          </div>
+        }
+      >
+        <LandingPage onAuthSuccess={handleAuthSuccess} />
+      </Suspense>
+    );
   }
 
   // Logged in – show main app layout
@@ -450,24 +460,30 @@ export default function App() {
         </>
       )}
       {activeTab === 'monitoring' && (
-        <LiveMonitoringView currentUser={currentUser} />
+        <Suspense fallback={<div className="loading-spinner-view" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-color)' }}><div className="spin-icon" style={{ width: 32, height: 32, border: '3px solid rgba(99,102,241,0.2)', borderTopColor: 'var(--accent-color)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} /></div>}>
+          <LiveMonitoringView currentUser={currentUser} />
+        </Suspense>
       )}
       {activeTab === 'settings' && (
-        <SettingsView 
-          currentUser={currentUser} 
-          onUpdateUser={handleUpdateCurrentUser} 
-          onLogout={handleLogout} 
-          initialCategory={settingsCategory}
-        />
+        <Suspense fallback={<div className="loading-spinner-view" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-color)' }}><div className="spin-icon" style={{ width: 32, height: 32, border: '3px solid rgba(99,102,241,0.2)', borderTopColor: 'var(--accent-color)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} /></div>}>
+          <SettingsView 
+            currentUser={currentUser} 
+            onUpdateUser={handleUpdateCurrentUser} 
+            onLogout={handleLogout} 
+            initialCategory={settingsCategory}
+          />
+        </Suspense>
       )}
 
       {/* User Screen Share Consent Modal */}
       {pendingRequest && (
-        <ScreenShareConsentModal
-          adminName={pendingRequest.adminName}
-          onAccept={acceptScreenShare}
-          onReject={rejectScreenShare}
-        />
+        <Suspense fallback={null}>
+          <ScreenShareConsentModal
+            adminName={pendingRequest.adminName}
+            onAccept={acceptScreenShare}
+            onReject={rejectScreenShare}
+          />
+        </Suspense>
       )}
 
       {/* Floating indicator when screen is being live monitored */}
@@ -513,61 +529,67 @@ export default function App() {
         </div>
       )}
       
-      <CallModal
-        callState={callState}
-        participants={participants}
-        mutedParticipants={mutedParticipants}
-        connectionQuality={connectionQuality}
-        currentUser={currentUser}
-        localVideoRef={localVideoRef}
-        remoteVideoRef={remoteVideoRef}
-        answerCall={answerCall}
-        leaveCall={leaveCall}
-        toggleMic={toggleMic}
-        toggleVideo={toggleVideo}
-        toggleSpeaker={toggleSpeaker}
-        upgradeToVideo={upgradeToVideo}
-        localMicMuted={localMicMuted}
-        localVideoOff={localVideoOff}
-        speakerOn={speakerOn}
-        isScreenSharing={isScreenSharing}
-        onStartScreenShare={startScreenShare}
-        onStopScreenShare={stopScreenShare}
-        onSwitchCamera={switchCamera}
-        onChangeAudioInput={changeAudioInput}
-        onChangeVideoInput={changeVideoInput}
-        onChangeAudioOutput={changeAudioOutput}
-        onStartCall={handleCallUser}
-        onInviteParticipant={inviteParticipant}
-      />
+      <Suspense fallback={null}>
+        <CallModal
+          callState={callState}
+          participants={participants}
+          mutedParticipants={mutedParticipants}
+          connectionQuality={connectionQuality}
+          currentUser={currentUser}
+          localVideoRef={localVideoRef}
+          remoteVideoRef={remoteVideoRef}
+          answerCall={answerCall}
+          leaveCall={leaveCall}
+          toggleMic={toggleMic}
+          toggleVideo={toggleVideo}
+          toggleSpeaker={toggleSpeaker}
+          upgradeToVideo={upgradeToVideo}
+          localMicMuted={localMicMuted}
+          localVideoOff={localVideoOff}
+          speakerOn={speakerOn}
+          isScreenSharing={isScreenSharing}
+          onStartScreenShare={startScreenShare}
+          onStopScreenShare={stopScreenShare}
+          onSwitchCamera={switchCamera}
+          onChangeAudioInput={changeAudioInput}
+          onChangeVideoInput={changeVideoInput}
+          onChangeAudioOutput={changeAudioOutput}
+          onStartCall={handleCallUser}
+          onInviteParticipant={inviteParticipant}
+        />
+      </Suspense>
 
       {showCreateGroup && (
-        <CreateGroupModal
-          currentUser={currentUser}
-          onClose={() => setShowCreateGroup(false)}
-          onGroupCreated={(group) => {
-            setShowCreateGroup(false);
-            setGroupRefreshTrigger(prev => prev + 1);
-            handleSelectGroup(group);
-          }}
-        />
+        <Suspense fallback={null}>
+          <CreateGroupModal
+            currentUser={currentUser}
+            onClose={() => setShowCreateGroup(false)}
+            onGroupCreated={(group) => {
+              setShowCreateGroup(false);
+              setGroupRefreshTrigger(prev => prev + 1);
+              handleSelectGroup(group);
+            }}
+          />
+        </Suspense>
       )}
 
       {showGroupDetails && selectedGroup && (
-        <GroupDetailsModal
-          group={selectedGroup}
-          currentUser={currentUser}
-          onClose={() => setShowGroupDetails(false)}
-          onGroupUpdated={(group) => {
-            setGroupRefreshTrigger(prev => prev + 1);
-            handleSelectGroup(group);
-          }}
-          onGroupLeft={() => {
-            setShowGroupDetails(false);
-            handleSelectGroup(null);
-            setGroupRefreshTrigger(prev => prev + 1);
-          }}
-        />
+        <Suspense fallback={null}>
+          <GroupDetailsModal
+            group={selectedGroup}
+            currentUser={currentUser}
+            onClose={() => setShowGroupDetails(false)}
+            onGroupUpdated={(group) => {
+              setGroupRefreshTrigger(prev => prev + 1);
+              handleSelectGroup(group);
+            }}
+            onGroupLeft={() => {
+              setShowGroupDetails(false);
+              handleSelectGroup(null);
+              setGroupRefreshTrigger(prev => prev + 1);
+            }}
+          />
+        </Suspense>
       )}
     </div>
   );

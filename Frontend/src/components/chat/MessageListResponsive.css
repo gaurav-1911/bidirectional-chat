@@ -10,6 +10,12 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  will-change: scroll-position;
+}
+
+.message-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 56px;
 }
 
 /* Mobile (< 768px) */

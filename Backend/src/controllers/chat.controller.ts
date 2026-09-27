@@ -49,9 +49,21 @@ export const getConversationMessages = async (req: Request, res: Response): Prom
       query.deletedFor = { $ne: String(userId) };
     }
 
-    const messages = await MessageModel.find(query).sort({ createdAt: 1 }).lean();
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.min(Math.max(1, Number(req.query.limit) || 100), 250);
 
-    sendSuccess(res, messages, undefined, HttpStatus.OK, { count: messages.length });
+    // Fetch messages with index optimization
+    let messagesQuery = MessageModel.find(query)
+      .sort({ createdAt: 1 })
+      .lean();
+
+    if (req.query.page) {
+      messagesQuery = messagesQuery.skip((page - 1) * limit).limit(limit);
+    }
+
+    const messages = await messagesQuery;
+
+    sendSuccess(res, messages, undefined, HttpStatus.OK, { count: messages.length, page });
   } catch (error: any) {
     sendError(res, error.message || 'Failed to retrieve messages', HttpStatus.INTERNAL_SERVER_ERROR);
   }

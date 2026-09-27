@@ -88,7 +88,7 @@ export function PeopleSidebar({
     
     searchTimeoutRef.current = setTimeout(() => {
       handleSearch(val);
-    }, 500);
+    }, 250);
   };
 
   return (

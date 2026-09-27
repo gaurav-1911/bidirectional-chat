@@ -47,15 +47,32 @@ app.use(
 );
 
 // Compress HTTP responses with gzip for high throughput and reduced bandwidth
-app.use(compression());
+app.use(
+  compression({
+    level: 6,
+    threshold: 512, // Compress payloads larger than 512 bytes
+    filter: (req, res) => {
+      if (req.headers['x-no-compression']) return false;
+      return compression.filter(req, res);
+    },
+  })
+);
 
 // Body parser limits to prevent payload exhaustion (25mb for high-res screen snapshots)
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 app.use(cookieParser());
 
-// Serve static files from the 'uploads' directory
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+// Serve static files from the 'uploads' directory with 30-day browser caching & ETags
+app.use(
+  '/uploads',
+  express.static(path.join(process.cwd(), 'uploads'), {
+    maxAge: '30d',
+    etag: true,
+    immutable: true,
+    fallthrough: false,
+  })
+);
 
 import { HttpStatus } from './constants/httpStatus';
 import { sendError } from './utils/response';

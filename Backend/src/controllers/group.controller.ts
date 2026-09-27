@@ -46,22 +46,40 @@ export const getUserGroups = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    const groups = await GroupModel.find({ members: userId }).lean();
+    const groups = await GroupModel.find({ members: userId }).sort({ updatedAt: -1 }).lean();
+    if (!groups.length) {
+      sendSuccess(res, [], undefined, HttpStatus.OK, { count: 0 });
+      return;
+    }
 
-    // Fetch last message for each group
-    const groupsWithMessages = await Promise.all(
-      groups.map(async (group) => {
-        const lastMessage = await MessageModel.findOne({ groupId: group._id.toString() })
-          .sort({ createdAt: -1 })
-          .lean();
+    const groupIds = groups.map((g) => g._id.toString());
 
-        return {
-          group,
-          lastMessage: lastMessage?.isDeletedForEveryone ? "🚫 This message was deleted" : (lastMessage?.message || (lastMessage?.fileUrl ? 'File attached' : undefined)),
-          lastMessageTime: lastMessage?.createdAt,
-        };
-      })
-    );
+    // Single indexed query to fetch the latest messages for all groups in one round-trip
+    const recentMessages = await MessageModel.find({
+      groupId: { $in: groupIds },
+    })
+      .select('groupId message fileUrl isDeletedForEveryone createdAt')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const lastMsgMap = new Map<string, any>();
+    for (const msg of recentMessages) {
+      const gId = String(msg.groupId);
+      if (!lastMsgMap.has(gId)) {
+        lastMsgMap.set(gId, msg);
+      }
+    }
+
+    const groupsWithMessages = groups.map((group) => {
+      const lastMessage = lastMsgMap.get(group._id.toString());
+      return {
+        group,
+        lastMessage: lastMessage?.isDeletedForEveryone
+          ? '🚫 This message was deleted'
+          : lastMessage?.message || (lastMessage?.fileUrl ? 'File attached' : undefined),
+        lastMessageTime: lastMessage?.createdAt,
+      };
+    });
 
     // Sort by most recent message, or creation date if no messages
     groupsWithMessages.sort((a: any, b: any) => {

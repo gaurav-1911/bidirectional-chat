@@ -1,10 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+import React, { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import { GifPicker, Theme } from 'gif-picker-react';
 import { Giphy } from 'gif-picker-react/providers/giphy';
 import './UnifiedPicker.css';
 import './UnifiedPickerResponsive.css';
+
+// Lazy-load emoji dataset and component on demand to drastically speed up initial page render
+const LazyEmojiPicker = lazy(async () => {
+  const [dataModule, pickerModule] = await Promise.all([
+    import('@emoji-mart/data'),
+    import('@emoji-mart/react'),
+  ]);
+  const data = dataModule.default;
+  const Picker = pickerModule.default;
+  return {
+    default: (props: any) => <Picker data={data} {...props} />,
+  };
+});
 
 interface UnifiedPickerProps {
   onEmojiSelect: (emoji: any) => void;
@@ -73,7 +84,15 @@ export function UnifiedPicker({ onEmojiSelect, onGifSelect, disabled = false }: 
           </div>
           <div className="picker-content">
             {activeTab === 'emoji' ? (
-              <Picker data={data} onEmojiSelect={handleEmojiClick} theme="dark" />
+              <Suspense
+                fallback={
+                  <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                    Loading emojis...
+                  </div>
+                }
+              >
+                <LazyEmojiPicker onEmojiSelect={handleEmojiClick} theme="dark" />
+              </Suspense>
             ) : (
               <GifPicker 
                 provider={Giphy(import.meta.env.VITE_GIPHY_API_KEY || 'OGAgm85sj2fgG3UgIL7rV93tjhcQB0lG')} 
@@ -87,3 +106,4 @@ export function UnifiedPicker({ onEmojiSelect, onGifSelect, disabled = false }: 
     </div>
   );
 }
+
