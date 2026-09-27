@@ -1,15 +1,53 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { UserModel } from '../models/user.model';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt';
 import { HttpStatus } from '../constants/httpStatus';
 import { sendSuccess, sendError } from '../utils/response';
 import { config } from '../config';
+import { OAuth2Client } from 'google-auth-library';
+import { logger } from '../utils/logger';
+
+const googleClient = new OAuth2Client(config.googleClientId);
+
+const handleAuthError = (res: Response, error: any, defaultMsg: string = 'Authentication failed') => {
+  logger.error(`❌ Auth Error: ${error.message}`);
+  const msg = error.message || '';
+  if (
+    msg.includes('buffering timed out') ||
+    msg.includes('MongoServerSelectionError') ||
+    msg.includes('ECONNREFUSED') ||
+    msg.includes('connection timed out') ||
+    mongoose.connection.readyState !== 1
+  ) {
+    sendError(
+      res,
+      'Database connection timeout. Please ensure MongoDB Atlas Network Access whitelist allows 0.0.0.0/0.',
+      HttpStatus.SERVICE_UNAVAILABLE
+    );
+    return;
+  }
+  if (msg.includes('E11000') || msg.includes('duplicate key')) {
+    sendError(res, 'Email or username is already registered.', HttpStatus.BAD_REQUEST);
+    return;
+  }
+  sendError(res, msg || defaultMsg, HttpStatus.INTERNAL_SERVER_ERROR);
+};
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
       sendError(res, 'Please provide username, email and password', HttpStatus.BAD_REQUEST);
+      return;
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      sendError(
+        res,
+        'Database connection is initializing. Please verify MongoDB Atlas IP whitelist (0.0.0.0/0).',
+        HttpStatus.SERVICE_UNAVAILABLE
+      );
       return;
     }
 
@@ -45,7 +83,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       HttpStatus.CREATED
     );
   } catch (error: any) {
-    sendError(res, error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    handleAuthError(res, error, 'Registration failed');
   }
 };
 
@@ -54,6 +92,15 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
     if (!email || !password) {
       sendError(res, 'Please enter email and password', HttpStatus.BAD_REQUEST);
+      return;
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      sendError(
+        res,
+        'Database connection is initializing. Please verify MongoDB Atlas IP whitelist (0.0.0.0/0).',
+        HttpStatus.SERVICE_UNAVAILABLE
+      );
       return;
     }
 
@@ -106,20 +153,26 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       path: '/',
     });
 
-    sendSuccess(res, {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      isOnline: user.isOnline,
-      avatar: user.avatar,
-      settings: user.settings,
-    }, 'Login successful', HttpStatus.OK, {
-      token: accessToken,
-      accessToken,
-      refreshToken,
-    });
+    sendSuccess(
+      res,
+      {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        isOnline: user.isOnline,
+        avatar: user.avatar,
+        settings: user.settings,
+      },
+      'Login successful',
+      HttpStatus.OK,
+      {
+        token: accessToken,
+        accessToken,
+        refreshToken,
+      }
+    );
   } catch (error: any) {
-    sendError(res, error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    handleAuthError(res, error, 'Login failed');
   }
 };
 
@@ -182,12 +235,9 @@ export const logoutUser = async (req: Request, res: Response): Promise<void> => 
     res.clearCookie('refresh_token', { path: '/', secure: isProd, sameSite: isProd ? 'none' : 'lax' });
     sendSuccess(res, null, 'Logged out successfully', HttpStatus.OK);
   } catch (error: any) {
-    sendError(res, error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    handleAuthError(res, error, 'Logout failed');
   }
 };
-
-import { OAuth2Client } from 'google-auth-library';
-const googleClient = new OAuth2Client(config.googleClientId);
 
 export const googleAuth = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -197,7 +247,6 @@ export const googleAuth = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    // Verify Google ID Token with Google's public keys
     const ticket = await googleClient.verifyIdToken({
       idToken: credential,
       audience: config.googleClientId,
@@ -213,11 +262,9 @@ export const googleAuth = async (req: Request, res: Response): Promise<void> => 
     const name = payload.name || payload.given_name || email.split('@')[0];
     const picture = payload.picture || '';
 
-    // Check if user already exists
     let user = await UserModel.findOne({ email });
 
     if (!user) {
-      // Generate clean unique username from Google name or email prefix
       let baseUsername = name.replace(/[^a-zA-Z0-9_.]/g, '').toLowerCase().slice(0, 18);
       if (!baseUsername || baseUsername.length < 3) {
         baseUsername = email.split('@')[0].replace(/[^a-zA-Z0-9_.]/g, '').toLowerCase().slice(0, 18);
@@ -228,7 +275,6 @@ export const googleAuth = async (req: Request, res: Response): Promise<void> => 
         finalUsername = `${baseUsername}${counter++}`;
       }
 
-      // Create new user authenticated via Google
       user = await UserModel.create({
         username: finalUsername,
         email,
@@ -291,7 +337,6 @@ export const googleAuth = async (req: Request, res: Response): Promise<void> => 
       }
     );
   } catch (error: any) {
-    sendError(res, error.message || 'Google authentication failed', HttpStatus.UNAUTHORIZED);
+    handleAuthError(res, error, 'Google authentication failed');
   }
 };
-

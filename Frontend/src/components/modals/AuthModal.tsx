@@ -17,6 +17,18 @@ const USERNAME_REGEX = /^[a-zA-Z0-9_.]+$/;
 const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+={}\[\]:;<>,.?/~\\-]).{8,64}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+const formatErrorMessage = (rawMsg?: string): string => {
+  if (!rawMsg) return 'An error occurred. Please try again.';
+  const lower = rawMsg.toLowerCase();
+  if (lower.includes('buffering timed out') || lower.includes('mongoserverselectionerror') || lower.includes('econnrefused') || lower.includes('timeout')) {
+    return 'Database connection timeout. Please check MongoDB Atlas IP Access List (0.0.0.0/0).';
+  }
+  if (lower.includes('e11000') || lower.includes('duplicate key') || lower.includes('already taken') || lower.includes('already registered')) {
+    return 'An account with this email or username already exists.';
+  }
+  return rawMsg;
+};
+
 // Yup Validation Schemas
 const loginValidationSchema = Yup.object({
   email: Yup.string()
@@ -76,12 +88,11 @@ export function AuthModal({ onAuthSuccess, initialIsLogin = true, onClose }: Aut
         if (res.success && res.data) {
           onAuthSuccess(res.data);
         } else {
-          setServerError(res.message || 'Login failed. Please check your credentials.');
+          setServerError(formatErrorMessage(res.message) || 'Invalid email or password.');
         }
       } catch (err: any) {
-        setServerError(
-          err?.response?.data?.message || err.message || 'Something went wrong. Please try again.'
-        );
+        const rawMsg = err?.response?.data?.message || err.message || '';
+        setServerError(formatErrorMessage(rawMsg));
       } finally {
         setSubmitting(false);
       }
@@ -109,12 +120,11 @@ export function AuthModal({ onAuthSuccess, initialIsLogin = true, onClose }: Aut
           setIsLogin(true);
           setSuccessMessage('Account created successfully! Please sign in.');
         } else {
-          setServerError(res.message || 'Registration failed. Please try again.');
+          setServerError(formatErrorMessage(res.message) || 'Registration failed. Please try again.');
         }
       } catch (err: any) {
-        setServerError(
-          err?.response?.data?.message || err.message || 'Something went wrong. Please try again.'
-        );
+        const rawMsg = err?.response?.data?.message || err.message || '';
+        setServerError(formatErrorMessage(rawMsg));
       } finally {
         setSubmitting(false);
       }
