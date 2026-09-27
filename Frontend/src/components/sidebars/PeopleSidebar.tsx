@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { UserProfile } from '../../types/chat.types';
 import { getAllUsersApi, searchUsersApi } from '../../services/userService';
 import { getSocket } from '../../services/socket';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './ChatsSidebarResponsive.css';
 
 interface PeopleSidebarProps {
@@ -160,7 +161,7 @@ export function PeopleSidebar({
                 <div className="friend-avatar">
                   {friend.avatar ? (
                     <img 
-                      src={friend.avatar} 
+                      src={resolveMediaUrl(friend.avatar)} 
                       alt="Avatar" 
                       style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
                       onError={(e) => {

@@ -3,6 +3,7 @@ import { MessageList } from './MessageList';
 import { MessageInput } from './MessageInput';
 import { ForwardModal } from '../modals/ForwardModal';
 import { UserProfile, ChatMessage, GroupProfile, ChatTarget, CallRecord } from '../../types/chat.types';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './ChatWindowResponsive.css';
 
 interface ChatWindowProps {
@@ -124,7 +125,7 @@ export function ChatWindow({ currentUser, selectedTarget, messages, callRecords 
               <div className="chat-friend-avatar">
                 {selectedTarget.avatar ? (
                   <img 
-                    src={selectedTarget.avatar} 
+                    src={resolveMediaUrl(selectedTarget.avatar)} 
                     alt="Avatar" 
                     style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
                     onError={(e) => {
@@ -429,7 +430,7 @@ export function ChatWindow({ currentUser, selectedTarget, messages, callRecords 
             {/* Profile Avatar Header */}
             <div style={{ width: '76px', height: '76px', borderRadius: '50%', background: 'var(--accent-gradient)', color: '#fff', fontSize: '30px', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', position: 'relative', boxShadow: '0 6px 20px rgba(99, 102, 241, 0.35)', border: '3px solid var(--border-color)' }}>
               {selectedTarget.avatar ? (
-                <img src={selectedTarget.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                <img src={resolveMediaUrl(selectedTarget.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               ) : (
                 selectedTarget.username.charAt(0).toUpperCase()
               )}
@@ -622,7 +623,7 @@ export function ChatWindow({ currentUser, selectedTarget, messages, callRecords 
                       >
                         {isImg ? (
                           <div style={{ position: 'relative', width: '100%', height: '110px' }}>
-                            <img src={m.fileUrl} alt={m.fileName || 'Image'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={resolveMediaUrl(m.fileUrl)} alt={m.fileName || 'Image'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '4px 6px', background: 'linear-gradient(transparent, rgba(0,0,0,0.8))', color: '#fff', fontSize: '11px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                               {m.fileName || 'Photo'}
                             </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { UserProfile } from '../../types/chat.types';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './MainNavBarResponsive.css';
 
 export type TabType = 'chats' | 'people' | 'groups' | 'calls' | 'monitoring' | 'settings';
@@ -139,7 +140,7 @@ export const MainNavBar: React.FC<MainNavBarProps> = ({
         >
           {currentUser.avatar && !avatarError ? (
             <img
-              src={currentUser.avatar}
+              src={resolveMediaUrl(currentUser.avatar)}
               alt={currentUser.username}
               onError={() => setAvatarError(true)}
             />
@@ -165,7 +166,7 @@ export const MainNavBar: React.FC<MainNavBarProps> = ({
               <div className="drawer-avatar">
                 {currentUser.avatar && !avatarError ? (
                   <img
-                    src={currentUser.avatar}
+                    src={resolveMediaUrl(currentUser.avatar)}
                     alt={currentUser.username}
                     onError={() => setAvatarError(true)}
                   />
@@ -262,7 +263,7 @@ export const MainNavBar: React.FC<MainNavBarProps> = ({
           >
             {currentUser.avatar && !avatarError ? (
               <img
-                src={currentUser.avatar}
+                src={resolveMediaUrl(currentUser.avatar)}
                 alt={`${currentUser.username}'s profile avatar`}
                 width="36"
                 height="36"

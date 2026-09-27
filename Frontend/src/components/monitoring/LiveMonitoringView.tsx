@@ -377,7 +377,7 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                 >
                   <div style={{ position: 'relative' }}>
                     <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.9rem' }}>
-                      {u.avatar ? <img src={u.avatar} alt={u.username} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : u.username.charAt(0).toUpperCase()}
+                      {u.avatar ? <img src={resolveMediaUrl(u.avatar)} alt={u.username} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : u.username.charAt(0).toUpperCase()}
                     </div>
                     <div style={{ position: 'absolute', bottom: '0', right: '0', width: '10px', height: '10px', borderRadius: '50%', background: '#4ade80', border: '2px solid #131b2e' }} />
                   </div>
@@ -419,7 +419,7 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
             <div className="monitoring-toolbar">
               <div className="monitoring-target-info">
                 <div className="monitoring-target-avatar">
-                  {selectedUser.avatar ? <img src={selectedUser.avatar} alt={selectedUser.username} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : selectedUser.username.charAt(0).toUpperCase()}
+                  {selectedUser.avatar ? <img src={resolveMediaUrl(selectedUser.avatar)} alt={selectedUser.username} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : selectedUser.username.charAt(0).toUpperCase()}
                 </div>
                 <div>
                   <h3 style={{ margin: '0 0 2px 0', fontSize: '16px', fontWeight: '700', color: 'var(--text-main)' }}>{selectedUser.username}</h3>

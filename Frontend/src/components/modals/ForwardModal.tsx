@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserProfile, ChatMessage } from '../../types/chat.types';
 import { getAllUsersApi } from '../../services/userService';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './ForwardModal.css';
 import './ForwardModalResponsive.css';
 
@@ -102,7 +103,7 @@ export function ForwardModal({ currentUser, messageToForward, onClose, onForward
                 </div>
                 <div className="forward-avatar">
                   {user.avatar ? (
-                    <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={resolveMediaUrl(user.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
                     user.username.charAt(0).toUpperCase()
                   )}

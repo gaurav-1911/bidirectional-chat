@@ -387,7 +387,7 @@ export function MessageList({ messages, callRecords = [], currentUser, selectedT
                       <div className="message-avatar" style={{ flexShrink: 0, paddingBottom: '4px' }}>
                         <div className="chat-friend-avatar" style={{ width: '32px', height: '32px', fontSize: '0.85rem', background: 'var(--accent-gradient)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', overflow: 'hidden' }}>
                           {selectedTarget && 'avatar' in selectedTarget && selectedTarget.avatar ? (
-                            <img src={selectedTarget.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                            <img src={resolveMediaUrl(selectedTarget.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                           ) : (
                             msg.senderName ? msg.senderName.charAt(0).toUpperCase() : '?'
                           )}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserProfile, GroupProfile } from '../../types/chat.types';
 import { getAllUsersApi, searchUsersApi } from '../../services/userService';
 import { createGroupApi } from '../../services/groupService';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './GroupDetailsModalResponsive.css';
 
 interface CreateGroupModalProps {
@@ -170,7 +171,7 @@ export function CreateGroupModal({ currentUser, onClose, onGroupCreated }: Creat
                       </div>
                       <div className="friend-avatar" style={{ width: '34px', height: '34px', marginRight: '12px' }}>
                         {user.avatar ? (
-                          <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                          <img src={resolveMediaUrl(user.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                         ) : (
                           user.username.charAt(0).toUpperCase()
                         )}

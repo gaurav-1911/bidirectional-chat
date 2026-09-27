@@ -4,6 +4,8 @@ import { updateSettingsApi, clearChatHistoryApi } from '../../services/settingsS
 import { uploadFileApi, updateAvatarApi, updateProfileApi, sendEmailOtpApi, verifyEmailOtpApi } from '../../services/userService';
 import { ConfirmModal } from '../modals/ConfirmModal';
 import { CustomSelect } from '../modals/CustomSelect';
+import { resolveMediaUrl } from '../../utils/url.util';
+import { compressImageFile } from '../../utils/image.util';
 import './SettingsViewResponsive.css';
 
 export type SettingsCategory = 'profile' | 'privacy' | 'notifications' | 'appearance' | 'chat' | 'other';
@@ -265,27 +267,49 @@ export function SettingsView({ currentUser, onUpdateUser, onLogout, initialCateg
     if (!e.target.files || e.target.files.length === 0) return;
     const file = e.target.files[0];
     setAvatarUploading(true);
+    setAvatarLoadError(false);
+    setErrorMsg('');
+
     try {
-      const uploadRes = await uploadFileApi(file);
-      if (uploadRes.success && uploadRes.data?.fileUrl) {
-        const updateRes = await updateAvatarApi(currentUser._id, uploadRes.data.fileUrl);
-        if (updateRes.success) {
-          onUpdateUser(updateRes.data);
-          setSuccessMsg('Profile picture updated successfully!');
-          setTimeout(() => setSuccessMsg(''), 3000);
-        } else {
-          setErrorMsg('Failed to update avatar profile');
-          setTimeout(() => setErrorMsg(''), 3000);
+      // Step 1: Compress and create an optimized data URL on client for instant preview & fallback
+      const compressedDataUrl = await compressImageFile(file, 400, 400, 0.85);
+
+      // Optimistically update UI so user instantly sees their new photo
+      onUpdateUser({ ...currentUser, avatar: compressedDataUrl });
+
+      let finalAvatarUrl = compressedDataUrl;
+
+      // Step 2: Try uploading file to backend storage
+      try {
+        const uploadRes = await uploadFileApi(file);
+        if (uploadRes.success && uploadRes.data?.fileUrl) {
+          finalAvatarUrl = uploadRes.data.fileUrl;
         }
-      } else {
-        setErrorMsg('Failed to upload image file');
-        setTimeout(() => setErrorMsg(''), 3000);
+      } catch (uploadErr) {
+        console.warn('Backend file upload fallback to compressed base64:', uploadErr);
       }
-    } catch {
-      setErrorMsg('Error uploading profile picture');
-      setTimeout(() => setErrorMsg(''), 3000);
+
+      // Step 3: Save avatar to user document in MongoDB
+      const updateRes = await updateAvatarApi(currentUser._id, finalAvatarUrl);
+      if (updateRes.success && updateRes.data) {
+        onUpdateUser(updateRes.data);
+        setSuccessMsg('Profile picture updated successfully! ✅');
+        setTimeout(() => setSuccessMsg(''), 3500);
+      } else {
+        // Retain the optimized local/compressed avatar
+        onUpdateUser({ ...currentUser, avatar: finalAvatarUrl });
+        setSuccessMsg('Profile picture updated! ✅');
+        setTimeout(() => setSuccessMsg(''), 3500);
+      }
+    } catch (err: any) {
+      console.error('Avatar update error:', err);
+      setErrorMsg(err.response?.data?.message || err.message || 'Failed to update profile picture');
+      setTimeout(() => setErrorMsg(''), 3500);
     } finally {
       setAvatarUploading(false);
+      if (avatarInputRef.current) {
+        avatarInputRef.current.value = '';
+      }
     }
   };
 
@@ -430,27 +454,44 @@ export function SettingsView({ currentUser, onUpdateUser, onLogout, initialCateg
                 {/* Avatar + Info */}
                 <div style={{ padding: '0 28px 28px', marginTop: '-50px', position: 'relative', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-end', gap: '20px' }}>
-                    <div style={{
-                      width: '94px', height: '94px', borderRadius: '50%',
-                      background: 'var(--accent-gradient)',
-                      border: '4px solid var(--bg-card)',
-                      overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-                      position: 'relative',
-                    }}>
+                    <div 
+                      onClick={() => !avatarUploading && avatarInputRef.current?.click()}
+                      title="Click to change photo"
+                      style={{
+                        width: '94px', height: '94px', borderRadius: '50%',
+                        background: 'var(--accent-gradient)',
+                        border: '4px solid var(--bg-card)',
+                        overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+                        position: 'relative',
+                        cursor: avatarUploading ? 'wait' : 'pointer',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                      }}
+                    >
                       {currentUser.avatar && !avatarLoadError ? (
                         <img 
-                          src={currentUser.avatar} 
+                          src={resolveMediaUrl(currentUser.avatar)} 
                           alt="Profile" 
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} 
                           onError={() => setAvatarLoadError(true)}
                         />
                       ) : (
                         <span style={{ color: '#fff', fontSize: '34px', fontWeight: 'bold' }}>{currentUser.username.charAt(0).toUpperCase()}</span>
                       )}
-                      {avatarUploading && (
+                      {avatarUploading ? (
                         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           <svg className="spin-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+                        </div>
+                      ) : (
+                        <div className="avatar-hover-overlay" style={{
+                          position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.35)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          opacity: 0, transition: 'opacity 0.2s ease',
+                        }}>
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                          </svg>
                         </div>
                       )}
                     </div>

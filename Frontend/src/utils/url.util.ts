@@ -11,9 +11,18 @@ export const resolveMediaUrl = (url?: string | null): string => {
   }
 
   // Determine base backend URL
-  const backendBase = import.meta.env.VITE_API_URL
+  let backendBase = import.meta.env.VITE_API_URL
     ? import.meta.env.VITE_API_URL.replace(/\/$/, '')
     : '';
+
+  // Fallback for GitHub Pages or production when VITE_API_URL might not be explicitly populated
+  if (!backendBase && typeof window !== 'undefined') {
+    if (window.location.hostname.includes('github.io') || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')) {
+      backendBase = 'https://bidirectional-chat.onrender.com';
+    } else {
+      backendBase = 'http://localhost:5000';
+    }
+  }
 
   // If it's a relative path like /uploads/...
   if (url.startsWith('/')) {
@@ -22,3 +31,4 @@ export const resolveMediaUrl = (url?: string | null): string => {
 
   return backendBase ? `${backendBase}/${url}` : `/${url}`;
 };
+

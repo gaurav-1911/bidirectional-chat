@@ -3,6 +3,7 @@ import { UserProfile, GroupProfile } from '../../types/chat.types';
 import { updateGroupApi, leaveGroupApi } from '../../services/groupService';
 import { getAllUsersApi, searchUsersApi } from '../../services/userService';
 import { ConfirmModal } from './ConfirmModal';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './GroupDetailsModalResponsive.css';
 
 interface GroupDetailsModalProps {
@@ -126,7 +127,7 @@ export function GroupDetailsModal({ group, currentUser, onClose, onGroupUpdated,
         <div style={{ textAlign: 'center', marginBottom: '16px' }}>
           <div style={{ width: '68px', height: '68px', margin: '0 auto 10px auto', position: 'relative' }}>
             {group.avatar ? (
-              <img src={group.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--border-color)' }} />
+              <img src={resolveMediaUrl(group.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--border-color)' }} />
             ) : (
               <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', fontSize: '26px', fontWeight: 'bold', boxShadow: '0 6px 16px rgba(99, 102, 241, 0.35)' }}>
                 {group.name.charAt(0).toUpperCase()}
@@ -228,7 +229,7 @@ export function GroupDetailsModal({ group, currentUser, onClose, onGroupUpdated,
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent-gradient)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold' }}>
                     {member.avatar ? (
-                      <img src={member.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                      <img src={resolveMediaUrl(member.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                     ) : (
                       member.username.charAt(0).toUpperCase()
                     )}

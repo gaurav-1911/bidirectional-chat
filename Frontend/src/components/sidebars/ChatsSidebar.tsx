@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserProfile, ChatMessage, RecentChatUser } from '../../types/chat.types';
 import { getRecentChatUsersApi } from '../../services/userService';
 import { getSocket } from '../../services/socket';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './ChatsSidebarResponsive.css';
 
 interface ChatsSidebarProps {
@@ -148,7 +149,7 @@ export function ChatsSidebar({
                 <div className="friend-avatar">
                   {friend.avatar ? (
                     <img 
-                      src={friend.avatar} 
+                      src={resolveMediaUrl(friend.avatar)} 
                       alt={`${friend.username}'s profile avatar`} 
                       width="40"
                       height="40"

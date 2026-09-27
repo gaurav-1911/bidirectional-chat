@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserProfile, CallRecord } from '../../types/chat.types';
 import { getUserCallHistoryApi } from '../../services/callService';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './ChatsSidebarResponsive.css';
 
 interface CallsSidebarProps {
@@ -107,7 +108,7 @@ export function CallsSidebar({ currentUser, onCallUser, newCallHistoryTrigger }:
               >
                 <div className="friend-avatar">
                   {peer.avatar ? (
-                    <img src={peer.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                    <img src={resolveMediaUrl(peer.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                   ) : (
                     peer.username.charAt(0).toUpperCase()
                   )}

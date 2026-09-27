@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserProfile, GroupProfile, RecentGroup } from '../../types/chat.types';
 import { getUserGroupsApi } from '../../services/groupService';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './ChatsSidebarResponsive.css';
 
 interface GroupsSidebarProps {
@@ -167,7 +168,7 @@ export function GroupsSidebar({
               >
                 <div className="friend-avatar">
                   {group.avatar ? (
-                    <img src={group.avatar} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                    <img src={resolveMediaUrl(group.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                   ) : (
                     group.name.charAt(0).toUpperCase()
                   )}

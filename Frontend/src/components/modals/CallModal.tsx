@@ -3,6 +3,7 @@ import { CallState, Participant, ConnectionQuality } from '../../hooks/useWebRTC
 import { UserProfile } from '../../types/chat.types';
 import { getAllUsersApi } from '../../services/userService';
 import { CustomSelect } from './CustomSelect';
+import { resolveMediaUrl } from '../../utils/url.util';
 import './CallModalResponsive.css';
 
 
@@ -307,7 +308,7 @@ export const CallModal: React.FC<CallModalProps> = ({
             <div className="caller-info">
               <div className="caller-avatar" style={{ overflow: 'hidden' }}>
                 {callState.caller?.avatar ? (
-                  <img src={callState.caller.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={resolveMediaUrl(callState.caller.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   callState.caller?.name ? callState.caller.name.charAt(0).toUpperCase() : 'U'
                 )}
@@ -333,7 +334,7 @@ export const CallModal: React.FC<CallModalProps> = ({
             <div className="caller-info">
               <div className="caller-avatar" style={{ overflow: 'hidden' }}>
                 {callState.caller?.avatar ? (
-                  <img src={callState.caller.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={resolveMediaUrl(callState.caller.avatar)} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   callState.caller?.name && callState.caller.name !== 'Calling...' ? callState.caller.name.charAt(0).toUpperCase() : '📞'
                 )}
@@ -494,7 +495,7 @@ export const CallModal: React.FC<CallModalProps> = ({
                   <div style={{ textAlign: 'center' }}>
                     <div className="caller-avatar active-audio" style={{ width: 84, height: 84, fontSize: '2rem', overflow: 'hidden', position: 'relative' }}>
                       {currentUser?.avatar ? (
-                        <img src={currentUser.avatar} alt="You" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={resolveMediaUrl(currentUser.avatar)} alt="You" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (
                         currentUser?.username?.charAt(0).toUpperCase() || 'You'
                       )}
@@ -520,7 +521,7 @@ export const CallModal: React.FC<CallModalProps> = ({
                         <div key={p.id} style={{ textAlign: 'center' }}>
                           <div className="caller-avatar active-audio" style={{ width: 84, height: 84, fontSize: '2rem', overflow: 'hidden', position: 'relative' }}>
                             {displayAvatar ? (
-                              <img src={displayAvatar} alt={displayName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              <img src={resolveMediaUrl(displayAvatar)} alt={displayName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             ) : (
                               initial
                             )}
@@ -540,7 +541,7 @@ export const CallModal: React.FC<CallModalProps> = ({
                     <div style={{ textAlign: 'center' }}>
                       <div className="caller-avatar active-audio" style={{ width: 84, height: 84, fontSize: '2rem', overflow: 'hidden', position: 'relative' }}>
                         {callState.caller?.avatar ? (
-                          <img src={callState.caller.avatar} alt="Caller" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <img src={resolveMediaUrl(callState.caller.avatar)} alt="Caller" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         ) : (
                           callState.caller?.name ? callState.caller.name.charAt(0).toUpperCase() : 'U'
                         )}
@@ -767,7 +768,7 @@ export const CallModal: React.FC<CallModalProps> = ({
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                           <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', overflow: 'hidden' }}>
                             {displayAvatar ? (
-                              <img src={displayAvatar} alt={displayName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              <img src={resolveMediaUrl(displayAvatar)} alt={displayName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             ) : (
                               initial
                             )}
@@ -786,7 +787,7 @@ export const CallModal: React.FC<CallModalProps> = ({
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', overflow: 'hidden' }}>
                           {callState.caller.avatar ? (
-                            <img src={callState.caller.avatar} alt={callState.caller.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={resolveMediaUrl(callState.caller.avatar)} alt={callState.caller.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                           ) : (
                             callState.caller.name.charAt(0).toUpperCase()
                           )}
