@@ -9,7 +9,7 @@ import { HowItWorksSection } from './HowItWorksSection';
 import { SecuritySection } from './SecuritySection';
 import { FaqSection } from './FaqSection';
 import { Footer } from './Footer';
-import { BackToTop } from './BackToTop';
+import { WebsiteBotWidget } from './WebsiteBotWidget';
 import { UserProfile } from '../../types/chat.types';
 import './LandingPageResponsive.css';
 
@@ -74,8 +74,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
       {/* 3. Footer */}
       <Footer onOpenAuth={handleOpenAuth} />
 
-      {/* 4. Floating Back to Top Button */}
-      <BackToTop />
+      {/* 4. Interactive Website AI Chatbot Widget */}
+      <WebsiteBotWidget />
 
       {/* 5. Auth Modal Overlay */}
       {showAuthModal && (

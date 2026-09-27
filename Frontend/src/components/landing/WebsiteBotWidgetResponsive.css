@@ -1,0 +1,69 @@
+/* ==========================================================================
+   WebsiteBotWidgetResponsive.css
+   Responsive Styles for AI Chatbot Floating Widget
+   ========================================================================== */
+
+/* Mobile (< 768px): Bottom Sheet / Full Mobile Window */
+@media screen and (max-width: 767px) {
+  .website-bot-widget-container {
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+
+  .website-bot-trigger-btn {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .website-bot-window {
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 80vh !important;
+    height: 80dvh !important;
+    max-height: 80dvh !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
+  .website-bot-header {
+    padding: 12px 16px !important;
+  }
+
+  .website-bot-msg-bubble {
+    max-width: 88% !important;
+    font-size: 0.84rem !important;
+    padding: 8px 12px !important;
+  }
+
+  .website-bot-input {
+    font-size: 0.85rem !important;
+    padding: 8px 12px !important;
+  }
+
+  .website-bot-send-btn {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .website-bot-trigger-btn {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .website-bot-window {
+    height: 85dvh !important;
+  }
+
+  .website-bot-chip-btn {
+    font-size: 0.7rem !important;
+    padding: 4px 8px !important;
+  }
+}

@@ -11,3 +11,4 @@ export * from './BackToTop';
 export * from './ParticleBackground';
 export * from './TypingText';
 export * from './ChatPreview';
+export * from './WebsiteBotWidget';
