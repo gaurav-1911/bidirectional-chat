@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gauravchavdavhits.github.io/Chat-Application/sitemap.xml
+Sitemap: https://gaurav-1911.github.io/Chat-Application/sitemap.xml

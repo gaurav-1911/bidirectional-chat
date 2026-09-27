@@ -1,0 +1,35 @@
+{
+  "name": "Bidirectional Chat & Video Calling Application",
+  "short_name": "ChatApp",
+  "description": "High-performance real-time messaging, group collaboration, and WebRTC voice & video calling platform developed by Gaurav Chavda.",
+  "icons": [
+    {
+      "src": "/Chat-Application/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Chat-Application/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Chat-Application/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "/Chat-Application/",
+  "scope": "/Chat-Application/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait",
+  "categories": [
+    "communication",
+    "social",
+    "productivity"
+  ]
+}

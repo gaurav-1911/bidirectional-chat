@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Google Identity Services (Sign In With Google) -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <!-- Google Fonts Preconnect & Stylesheets: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,161 +16,220 @@
       rel="stylesheet"
     />
 
-    <!-- Primary Meta Tags -->
-    <title>Chat Application | Real-Time Messaging with React, Node.js &amp; Socket.IO</title>
+    <!-- Primary Search Engine Metadata -->
+    <title>Bidirectional Real-Time Chat &amp; Video Calling | Developed by Gaurav Chavda</title>
     <meta
       name="title"
-      content="Chat Application | Real-Time Messaging with React, Node.js &amp; Socket.IO"
+      content="Bidirectional Real-Time Chat &amp; Video Calling | Developed by Gaurav Chavda"
     />
     <meta
       name="description"
-      content="Chat Application is a real-time messaging platform built with React, TypeScript, Node.js, Express.js, MongoDB and Socket.IO, featuring real-time communication, authentication, group chats and online user status."
+      content="High-performance real-time messaging, WebRTC voice &amp; video calling, and group collaboration platform engineered by Gaurav Chavda using React 18, TypeScript, Node.js, Express, Socket.IO, and MongoDB Atlas."
+    />
+    <meta
+      name="keywords"
+      content="Gaurav Chavda, Gaurav, Bidirectional Chat, Real-Time Messaging Platform, WebRTC Video Calling, WebRTC Audio Call, Socket.IO Chat, React 18 TypeScript, Node.js Express MongoDB, Group Chats, Live User Monitoring, Full Stack Developer Gaurav Chavda"
     />
     <meta name="author" content="Gaurav Chavda" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#6366f1" />
+    <meta name="creator" content="Gaurav Chavda" />
+    <meta name="publisher" content="Gaurav Chavda" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="application-name" content="Chat Application" />
+    <meta name="apple-mobile-web-app-title" content="ChatApp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="msapplication-TileColor" content="#6366f1" />
+    <meta name="msapplication-config" content="/Chat-Application/browserconfig.xml" />
 
-    <!-- Canonical URL -->
-    <link
-      rel="canonical"
-      href="https://gauravchavdavhits.github.io/Chat-Application/"
-    />
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="google6717e02eebfeffa5" />
 
-    <!-- Favicon -->
+    <!-- Canonical Production URL -->
+    <link rel="canonical" href="https://gaurav-1911.github.io/Chat-Application/" />
+
+    <!-- Complete Favicon System -->
+    <link rel="icon" type="image/x-icon" href="/Chat-Application/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/Chat-Application/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/Chat-Application/favicon-16x16.png" />
     <link rel="icon" type="image/svg+xml" href="/Chat-Application/favicon.svg" />
-    <link rel="apple-touch-icon" href="/Chat-Application/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/Chat-Application/apple-touch-icon.png" />
+    <link rel="manifest" href="/Chat-Application/site.webmanifest" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph Protocol (Facebook, LinkedIn, Discord, Slack) -->
     <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://gauravchavdavhits.github.io/Chat-Application/"
-    />
-    <meta
-      property="og:title"
-      content="Chat Application | Real-Time Messaging with React, Node.js &amp; Socket.IO"
-    />
+    <meta property="og:url" content="https://gaurav-1911.github.io/Chat-Application/" />
+    <meta property="og:title" content="Bidirectional Real-Time Chat &amp; Video Calling | Developed by Gaurav Chavda" />
     <meta
       property="og:description"
-      content="Chat Application is a real-time messaging platform built with React, TypeScript, Node.js, Express.js, MongoDB and Socket.IO, featuring real-time communication, authentication, group chats and online user status."
+      content="Real-time messaging platform with sub-20ms WebSocket delivery, WebRTC voice/video calls, screen sharing, group conversations, and JWT authentication built by Gaurav Chavda."
     />
-    <meta
-      property="og:image"
-      content="https://gauravchavdavhits.github.io/Chat-Application/og-image.svg"
-    />
+    <meta property="og:image" content="https://gaurav-1911.github.io/Chat-Application/og-image.png" />
+    <meta property="og:image:secure_url" content="https://gaurav-1911.github.io/Chat-Application/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Chat Application - Real-Time Messaging Platform" />
-    <meta property="og:site_name" content="Chat Application" />
+    <meta property="og:image:alt" content="Bidirectional Real-Time Chat &amp; Video Calling Application by Gaurav Chavda" />
+    <meta property="og:site_name" content="Bidirectional Chat Application" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter / X Cards -->
+    <!-- Twitter / X Meta Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:url"
-      content="https://gauravchavdavhits.github.io/Chat-Application/"
-    />
-    <meta
-      name="twitter:title"
-      content="Chat Application | Real-Time Messaging with React, Node.js &amp; Socket.IO"
-    />
+    <meta name="twitter:url" content="https://gaurav-1911.github.io/Chat-Application/" />
+    <meta name="twitter:title" content="Bidirectional Real-Time Chat &amp; Video Calling | Developed by Gaurav Chavda" />
     <meta
       name="twitter:description"
-      content="Chat Application is a real-time messaging platform built with React, TypeScript, Node.js, Express.js, MongoDB and Socket.IO, featuring real-time communication, authentication, group chats and online user status."
+      content="High-performance real-time messaging, WebRTC voice &amp; video calls, and group collaboration platform developed by Gaurav Chavda."
     />
-    <meta
-      name="twitter:image"
-      content="https://gauravchavdavhits.github.io/Chat-Application/og-image.svg"
-    />
+    <meta name="twitter:image" content="https://gaurav-1911.github.io/Chat-Application/og-image.png" />
+    <meta name="twitter:image:alt" content="Bidirectional Chat Application Preview" />
 
-    <!-- JSON-LD Structured Data (WebApplication Schema) -->
+    <!-- JSON-LD Structured Data: Multi-Entity Graph (WebSite, WebApplication, Person, BreadcrumbList) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Chat Application",
-        "description": "Real-time messaging platform built with React, TypeScript, Node.js, Express.js, MongoDB and Socket.IO, featuring real-time communication, authentication, group chats and online user status.",
-        "url": "https://gauravchavdavhits.github.io/Chat-Application/",
-        "applicationCategory": "CommunicationApplication",
-        "operatingSystem": "Web",
-        "browserRequirements": "Requires JavaScript. Requires HTML5.",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "author": {
-          "@type": "Person",
-          "name": "Gaurav Chavda",
-          "url": "https://github.com/gauravchavdavhits"
-        },
-        "featureList": [
-          "Real-time messaging with Socket.IO",
-          "Secure user authentication",
-          "Online and offline presence indicators",
-          "Private 1-on-1 direct messaging",
-          "Group chat conversations",
-          "Voice and video calling using WebRTC",
-          "Message editing and deletion",
-          "Live typing indicators",
-          "Multimedia, file, and GIF sharing"
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://github.com/gaurav-1911#person",
+            "name": "Gaurav Chavda",
+            "jobTitle": "Full Stack Software Engineer",
+            "url": "https://github.com/gaurav-1911",
+            "email": "mailto:gauravbhai1911@gmail.com",
+            "sameAs": [
+              "https://github.com/gaurav-1911",
+              "https://github.com/gauravchavdavhits"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://gaurav-1911.github.io/Chat-Application/#website",
+            "url": "https://gaurav-1911.github.io/Chat-Application/",
+            "name": "Bidirectional Chat & Video Calling Application",
+            "description": "Real-time messaging and peer-to-peer WebRTC video calling platform developed by Gaurav Chavda.",
+            "publisher": {
+              "@id": "https://github.com/gaurav-1911#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://gaurav-1911.github.io/Chat-Application/#webapp",
+            "name": "Bidirectional Real-Time Chat Application",
+            "applicationCategory": "CommunicationApplication",
+            "operatingSystem": "Web (All Modern Browsers)",
+            "browserRequirements": "Requires JavaScript. Requires HTML5 & WebRTC.",
+            "url": "https://gaurav-1911.github.io/Chat-Application/",
+            "image": "https://gaurav-1911.github.io/Chat-Application/og-image.png",
+            "description": "Enterprise-grade real-time chat and video calling application with Socket.IO bidirectional streams, WebRTC calling, group channels, and JWT authentication.",
+            "author": {
+              "@id": "https://github.com/gaurav-1911#person"
+            },
+            "creator": {
+              "@id": "https://github.com/gaurav-1911#person"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock"
+            },
+            "featureList": [
+              "Instant Real-Time Direct Messaging powered by Socket.IO WebSockets",
+              "Peer-to-Peer HD Voice and Video Calling with WebRTC",
+              "Native In-Call Screen Sharing with User Consent Protocols",
+              "Multi-User Collaborative Group Channels & Administration",
+              "Dynamic Online, Offline & Last-Seen Presence Indicators",
+              "Message Status Indicators: Sent, Delivered, and Read Receipts",
+              "Message Lifecycle: Inline Editing, Delete for Me, Delete for Everyone",
+              "Rich Media Attachments: Images, Videos, Audio Voice Notes, Emojis & Giphy GIFs",
+              "Live User Monitoring Dashboard with Explicit Consent Confirmation",
+              "Dual-Token JWT Authentication (Access + Refresh) & Bcrypt Password Hashing",
+              "Google OAuth 2.0 Single Sign-On & Nodemailer OTP Email Verification"
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gaurav-1911.github.io/Chat-Application/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://gaurav-1911.github.io/Chat-Application/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Features",
+                "item": "https://gaurav-1911.github.io/Chat-Application/#features"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Technology",
+                "item": "https://gaurav-1911.github.io/Chat-Application/#technology"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Security",
+                "item": "https://gaurav-1911.github.io/Chat-Application/#security"
+              }
+            ]
+          }
         ]
       }
     </script>
   </head>
   <body>
-    <!-- Fallback content for search engine web crawlers before JS hydrates -->
+    <!-- Fallback Content for Search Engine Crawlers & No-JS Clients -->
     <noscript>
       <header>
-        <a href="https://gauravchavdavhits.github.io/Chat-Application/">Chat Application</a>
+        <a href="https://gaurav-1911.github.io/Chat-Application/">
+          <strong>Bidirectional Chat Application</strong> - Developed by Gaurav Chavda
+        </a>
       </header>
       <main>
         <article>
-          <h1>Real-Time Chat Application | Instant Messaging &amp; Calls</h1>
+          <h1>Bidirectional Real-Time Chat &amp; Video Calling Application</h1>
           <p>
-            A responsive real-time messaging application built with React, TypeScript, Node.js, Express, Socket.IO, and MongoDB. Connect with friends and communities through instant messaging, live presence indicators, group chats, and WebRTC voice &amp; video calls.
+            Developed by <strong>Gaurav Chavda</strong>, this high-performance full-stack web application provides instant messaging, collaborative group chat rooms, WebRTC video calling, live presence indicators, and live monitoring.
           </p>
 
           <section>
-            <h2>Production-Ready Communication Features</h2>
+            <h2>Core Platform Features</h2>
             <ul>
-              <li><strong>Real-Time Direct Messaging:</strong> Instant delivery powered by persistent WebSocket sockets with typing indicators.</li>
-              <li><strong>Live Presence &amp; Online Status:</strong> Dynamic online/offline presence tracking for all contacts.</li>
-              <li><strong>WebRTC Voice &amp; Video Calling:</strong> High-fidelity audio and video calling directly in the browser with screen sharing.</li>
-              <li><strong>Group Channels &amp; Collaboration:</strong> Multi-user group conversation rooms with real-time participation.</li>
-              <li><strong>Message Editing &amp; Deletion:</strong> Full message lifecycle management across active chat sessions.</li>
-              <li><strong>Media &amp; GIF Sharing:</strong> Integrated photo, file attachments, emojis, and Giphy animations.</li>
+              <li><strong>Instant Messaging:</strong> Sub-second delivery with Socket.IO, typing indicators, read receipts, and reactions.</li>
+              <li><strong>WebRTC Voice &amp; Video Calls:</strong> Crystal-clear peer-to-peer calling with screen sharing.</li>
+              <li><strong>Group Conversations:</strong> Multi-user collaboration rooms with admin permissions and custom avatars.</li>
+              <li><strong>Security &amp; Auth:</strong> Dual-token JWT session management, bcrypt encryption, Google OAuth, and OTP verification.</li>
+              <li><strong>Media &amp; Voice Notes:</strong> Waveform voice recording, file sharing, and Giphy GIF search.</li>
             </ul>
           </section>
 
           <section>
-            <h2>Built with Modern Web Technologies</h2>
+            <h2>Technology Architecture</h2>
             <p>
-              Socket.IO powers real-time bidirectional communication, while Node.js and Express provide the backend REST API. MongoDB stores application data, and React with TypeScript delivers the frontend user experience.
+              Engineered with React 18, TypeScript, Vite, Node.js, Express, Socket.IO, WebRTC, and MongoDB Atlas.
             </p>
           </section>
 
           <section>
-            <h2>How the Chat Application Works</h2>
-            <ol>
-              <li>Create an account with a unique username and secure password.</li>
-              <li>Sign in securely to browse contacts and active online users.</li>
-              <li>Select a conversation, send instant messages, or initiate a voice/video call.</li>
-            </ol>
-          </section>
-
-          <section>
-            <h2>Security &amp; Architecture</h2>
+            <h2>About the Developer</h2>
             <p>
-              Protected by JWT authentication with refresh token rotation, bcrypt password hashing, CORS whitelist protection, and input sanitization.
+              Created by <strong>Gaurav Chavda</strong> (<a href="mailto:gauravbhai1911@gmail.com">gauravbhai1911@gmail.com</a>). Source code available on <a href="https://github.com/gaurav-1911/bidirectional-chat">GitHub</a>.
             </p>
           </section>
         </article>
       </main>
       <footer>
-        <p>Chat Application &mdash; <a href="https://github.com/gauravchavdavhits/Chat-Application">View Source on GitHub</a></p>
+        <p>© 2026 Chat Application. Developed by Gaurav Chavda. All rights reserved.</p>
       </footer>
     </noscript>
 
+    <!-- Main React Mount Root -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
