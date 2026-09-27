@@ -4,6 +4,7 @@ import Picker from '@emoji-mart/react';
 import { GifPicker, Theme } from 'gif-picker-react';
 import { Giphy } from 'gif-picker-react/providers/giphy';
 import './UnifiedPicker.css';
+import './UnifiedPickerResponsive.css';
 
 interface UnifiedPickerProps {
   onEmojiSelect: (emoji: any) => void;

@@ -4,6 +4,7 @@ import { updateSettingsApi, clearChatHistoryApi } from '../services/settingsServ
 import { uploadFileApi, updateAvatarApi, updateProfileApi, sendEmailOtpApi, verifyEmailOtpApi } from '../services/userService';
 import { ConfirmModal } from './ConfirmModal';
 import { CustomSelect } from './CustomSelect';
+import './SettingsViewResponsive.css';
 
 export type SettingsCategory = 'profile' | 'privacy' | 'notifications' | 'appearance' | 'chat' | 'other';
 

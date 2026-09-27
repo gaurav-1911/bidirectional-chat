@@ -1,4 +1,5 @@
 import React from 'react';
+import './SecuritySectionResponsive.css';
 
 interface SecurityItem {
   title: string;

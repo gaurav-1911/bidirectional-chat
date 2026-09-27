@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './FaqSectionResponsive.css';
 
 interface FaqItem {
   question: string;

@@ -3,6 +3,7 @@ import { UserProfile, GroupProfile } from '../types/chat.types';
 import { updateGroupApi, leaveGroupApi } from '../services/groupService';
 import { getAllUsersApi, searchUsersApi } from '../services/userService';
 import { ConfirmModal } from './ConfirmModal';
+import './GroupDetailsModalResponsive.css';
 
 interface GroupDetailsModalProps {
   group: GroupProfile;

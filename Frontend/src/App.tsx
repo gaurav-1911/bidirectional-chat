@@ -21,6 +21,7 @@ import { useMonitoringStreamer } from './hooks/useMonitoringStreamer';
 import { getSocket } from './services/socket';
 import { getUserByIdApi } from './services/userService';
 import './App.css';
+import './AppResponsive.css';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('chats');
@@ -268,8 +269,10 @@ export default function App() {
   }
 
   // Logged in – show main app layout
+  const hasSelectedTarget = (activeTab === 'chats' && !!selectedFriend) || (activeTab === 'groups' && !!selectedGroup);
+
   return (
-    <div className="app-layout">
+    <div className={`app-layout ${hasSelectedTarget ? 'has-selected-target' : ''}`}>
       <MainNavBar 
         activeTab={activeTab} 
         onTabChange={(tab) => {
@@ -317,6 +320,7 @@ export default function App() {
             onlineUserIds={onlineUserIds}
             callUser={handleCallUser}
             enterToSend={currentUser?.settings?.chat?.enterToSend ?? true}
+            onBack={() => setSelectedFriend(null)}
           />
         </>
       )}
@@ -377,6 +381,7 @@ export default function App() {
               callUser={handleCallUser}
               onGroupHeaderClick={() => setShowGroupDetails(true)}
               enterToSend={currentUser?.settings?.chat?.enterToSend ?? true}
+              onBack={() => setSelectedGroup(null)}
             />
           ) : (
             <div className="chat-window" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-muted)', textAlign: 'center', padding: '24px' }}>

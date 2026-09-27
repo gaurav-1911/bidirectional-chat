@@ -3,6 +3,7 @@ import { CallState, Participant, ConnectionQuality } from '../hooks/useWebRTC';
 import { UserProfile } from '../types/chat.types';
 import { getAllUsersApi } from '../services/userService';
 import { CustomSelect } from './CustomSelect';
+import './CallModalResponsive.css';
 
 
 interface CallModalProps {

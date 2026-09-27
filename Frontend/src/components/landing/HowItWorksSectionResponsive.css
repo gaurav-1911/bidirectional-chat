@@ -1,0 +1,41 @@
+/* ==========================================================================
+   HowItWorksSectionResponsive.css
+   Responsive Styles for How It Works Step Timeline Component
+   ========================================================================== */
+
+/* Mobile (< 860px): Stacked Steps */
+@media screen and (max-width: 860px) {
+  .landing-steps-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .process-timeline-bar {
+    display: none !important;
+  }
+
+  .landing-step-item {
+    padding: 20px 16px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .step-number-badge {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 1rem !important;
+  }
+
+  .step-card-title {
+    font-size: 1.05rem !important;
+  }
+}
+
+/* 2. Desktop (861px+): 3 Columns with Connecting Line */
+@media screen and (min-width: 861px) {
+  .landing-steps-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 32px !important;
+  }
+}

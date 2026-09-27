@@ -1,0 +1,39 @@
+/* ==========================================================================
+   BackToTopResponsive.css
+   Responsive Styles for Floating Back To Top Button
+   ========================================================================== */
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+  .floating-back-to-top {
+    bottom: 20px !important;
+    right: 18px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .floating-back-to-top svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .floating-back-to-top {
+    bottom: 16px !important;
+    right: 14px !important;
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
+/* 2. Desktop (768px+) */
+@media screen and (min-width: 768px) {
+  .floating-back-to-top {
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+}

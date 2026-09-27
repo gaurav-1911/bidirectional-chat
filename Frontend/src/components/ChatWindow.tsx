@@ -3,6 +3,7 @@ import { MessageList } from './MessageList';
 import { MessageInput } from './MessageInput';
 import { ForwardModal } from './ForwardModal';
 import { UserProfile, ChatMessage, GroupProfile, ChatTarget, CallRecord } from '../types/chat.types';
+import './ChatWindowResponsive.css';
 
 interface ChatWindowProps {
   currentUser: UserProfile;
@@ -28,9 +29,10 @@ interface ChatWindowProps {
   markMessagesAsRead?: () => void;
   onGroupHeaderClick?: () => void;
   enterToSend?: boolean;
+  onBack?: () => void;
 }
 
-export function ChatWindow({ currentUser, selectedTarget, messages, callRecords = [], sendMessage, forwardMessage, editMessage, deleteMessage, clearConversation, reactToMessage, isConnected, error, typingUser, emitTyping, emitStopTyping, fetchOlderMessages, hasMore, loadingOlder, onlineUserIds = [], callUser, markMessagesAsRead, onGroupHeaderClick, enterToSend = true }: ChatWindowProps) {
+export function ChatWindow({ currentUser, selectedTarget, messages, callRecords = [], sendMessage, forwardMessage, editMessage, deleteMessage, clearConversation, reactToMessage, isConnected, error, typingUser, emitTyping, emitStopTyping, fetchOlderMessages, hasMore, loadingOlder, onlineUserIds = [], callUser, markMessagesAsRead, onGroupHeaderClick, enterToSend = true, onBack }: ChatWindowProps) {
 
   const [replyingToMessage, setReplyingToMessage] = React.useState<ChatMessage | null>(null);
   const [editingMessage, setEditingMessage] = React.useState<ChatMessage | null>(null);
@@ -95,6 +97,19 @@ export function ChatWindow({ currentUser, selectedTarget, messages, callRecords 
     <div className="chat-window">
       {/* Chat Header */}
       <div className="chat-header-bar">
+        {onBack && (
+          <button 
+            type="button" 
+            className="mobile-back-btn" 
+            onClick={(e) => { e.stopPropagation(); onBack(); }} 
+            title="Back to conversations" 
+            aria-label="Back"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        )}
         <div className="chat-header-left" onClick={() => {
           if (selectedTarget) {
             if ('members' in selectedTarget && onGroupHeaderClick) {

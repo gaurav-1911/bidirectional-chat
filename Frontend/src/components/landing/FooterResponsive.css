@@ -1,0 +1,48 @@
+/* ==========================================================================
+   FooterResponsive.css
+   Responsive Styles for Landing Page Footer Component
+   ========================================================================== */
+
+/* Mobile & Tablet (< 860px): Stacked Footer */
+@media screen and (max-width: 860px) {
+  .landing-footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .landing-footer {
+    padding: 3rem 0 1.5rem 0 !important;
+  }
+
+  .landing-footer-bottom {
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: center !important;
+    padding-top: 1.5rem !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .landing-footer-copy {
+    font-size: 0.82rem !important;
+  }
+
+  .footer-links-list a {
+    font-size: 0.85rem !important;
+    padding: 4px 0 !important;
+  }
+
+  .contact-email-link {
+    font-size: 0.82rem !important;
+    word-break: break-all !important;
+  }
+}
+
+/* 2. Desktop (861px+) */
+@media screen and (min-width: 861px) {
+  .landing-footer-grid {
+    grid-template-columns: 2fr 1fr 1fr !important;
+    gap: 3.5rem !important;
+  }
+}

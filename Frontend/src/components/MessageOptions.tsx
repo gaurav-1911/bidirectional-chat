@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './MessageOptions.css';
+import './MessageOptionsResponsive.css';
 
 interface MessageOptionsProps {
   onReply: () => void;

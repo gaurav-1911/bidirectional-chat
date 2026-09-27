@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './BackToTopResponsive.css';
 
 export const BackToTop: React.FC = () => {
   const [visible, setVisible] = useState(false);

@@ -1,4 +1,5 @@
 import React from 'react';
+import './FeaturesSectionResponsive.css';
 
 interface FeatureItem {
   icon: React.ReactNode;

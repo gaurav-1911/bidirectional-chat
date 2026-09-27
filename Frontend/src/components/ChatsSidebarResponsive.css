@@ -1,0 +1,130 @@
+/* ==========================================================================
+   ChatsSidebarResponsive.css
+   Responsive Styles for Chat, People, Groups, and Calls Sidebars
+   ========================================================================== */
+
+/* Mobile Full Width (< 768px) */
+@media screen and (max-width: 767px) {
+  .sidebar-container {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    border-right: none !important;
+    box-shadow: none !important;
+  }
+
+  .sidebar-header,
+  .sidebar-logo {
+    padding: 12px 14px !important;
+  }
+
+  .sidebar-logo h2 {
+    font-size: 1.25rem !important;
+  }
+
+  .sidebar-search-form {
+    padding: 10px 14px !important;
+  }
+
+  .chat-item,
+  .friend-item,
+  .group-item,
+  .call-item {
+    padding: 10px 14px !important;
+  }
+
+  .avatar-container,
+  .user-avatar-circle {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .sidebar-header,
+  .sidebar-logo {
+    padding: 10px !important;
+  }
+
+  .sidebar-logo h2 {
+    font-size: 1.1rem !important;
+  }
+
+  .sidebar-search-input {
+    font-size: 0.8rem !important;
+    padding: 6px 8px !important;
+  }
+
+  .chat-item,
+  .friend-item {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+
+  .chat-title-row h4 {
+    font-size: 0.88rem !important;
+  }
+
+  .chat-preview-text {
+    font-size: 0.78rem !important;
+  }
+
+  .avatar-container {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+}
+
+/* 2. Mobile (375px - 575px) */
+@media screen and (min-width: 375px) and (max-width: 575px) {
+  .sidebar-logo h2 {
+    font-size: 1.2rem !important;
+  }
+
+  .chat-item {
+    padding: 10px 12px !important;
+  }
+}
+
+/* 3. Large Mobile (576px - 767px) */
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .sidebar-logo h2 {
+    font-size: 1.3rem !important;
+  }
+}
+
+/* 4. Tablet (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .sidebar-container {
+    width: 280px !important;
+    min-width: 280px !important;
+  }
+
+  .chat-title-row h4 {
+    font-size: 0.9rem !important;
+  }
+
+  .chat-preview-text {
+    font-size: 0.8rem !important;
+  }
+}
+
+/* 5. Laptop (1024px - 1279px) */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  .sidebar-container {
+    width: 320px !important;
+    min-width: 320px !important;
+  }
+}
+
+/* 6. Desktop & Large Desktop (1280px+) */
+@media screen and (min-width: 1280px) {
+  .sidebar-container {
+    width: 340px !important;
+    min-width: 340px !important;
+  }
+}

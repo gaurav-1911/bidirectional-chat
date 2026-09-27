@@ -1,0 +1,47 @@
+/* ==========================================================================
+   LiveMonitoringViewResponsive.css
+   Responsive Styles for Live Monitoring Dashboard
+   ========================================================================== */
+
+/* Mobile & Tablet (< 1024px): Stack Monitoring View */
+@media screen and (max-width: 1023px) {
+  .live-monitoring-layout {
+    flex-direction: column !important;
+    height: calc(100dvh - 60px) !important;
+    overflow-y: auto !important;
+  }
+
+  .monitoring-sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-height: 200px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+
+  .monitoring-main-panel {
+    flex: 1 !important;
+    padding: 14px !important;
+  }
+
+  .monitoring-stream-wrapper {
+    min-height: 240px !important;
+    max-height: 50vh !important;
+  }
+
+  .monitoring-controls-bar {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .monitoring-main-panel {
+    padding: 8px !important;
+  }
+
+  .monitoring-stream-wrapper {
+    min-height: 180px !important;
+  }
+}

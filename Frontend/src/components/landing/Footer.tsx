@@ -1,4 +1,5 @@
 import React from 'react';
+import './FooterResponsive.css';
 
 interface FooterProps {
   onOpenAuth: (mode: 'login' | 'register') => void;
@@ -48,12 +49,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAuth }) => {
 
           <div className="landing-footer-contact">
             <span className="contact-label">Official Contact:</span>
-            <a href="mailto:bidirectionalchat@gmail.com" className="contact-email-link">
+            <a href="mailto:gauravbhai1911@gmail.com" className="contact-email-link">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="2" y="4" width="20" height="16" rx="2" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
-              bidirectionalchat@gmail.com
+              gauravbhai1911@gmail.com
             </a>
           </div>
         </div>

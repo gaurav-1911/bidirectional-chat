@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserProfile, CallRecord } from '../types/chat.types';
 import { getUserCallHistoryApi } from '../services/callService';
+import './ChatsSidebarResponsive.css';
 
 interface CallsSidebarProps {
   currentUser: UserProfile;

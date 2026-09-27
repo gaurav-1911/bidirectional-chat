@@ -1,0 +1,102 @@
+/* ==========================================================================
+   MessageListResponsive.css
+   Responsive Styles for Message List Component
+   ========================================================================== */
+
+.message-list-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+  .message-list-container {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .message-bubble {
+    max-width: 86% !important;
+    padding: 8px 12px !important;
+    font-size: var(--chat-font-size, 0.88rem) !important;
+  }
+
+  .message-media-img {
+    max-width: 220px !important;
+    max-height: 220px !important;
+  }
+
+  .voice-player-container {
+    width: 100% !important;
+    max-width: 240px !important;
+  }
+
+  .date-divider span {
+    font-size: 0.72rem !important;
+    padding: 3px 8px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .message-list-container {
+    padding: 6px 8px !important;
+    gap: 6px !important;
+  }
+
+  .message-bubble {
+    max-width: 92% !important;
+    padding: 6px 10px !important;
+  }
+
+  .message-media-img {
+    max-width: 180px !important;
+    max-height: 180px !important;
+  }
+
+  .voice-player-container {
+    max-width: 200px !important;
+  }
+}
+
+/* 2. Mobile (375px - 575px) */
+@media screen and (min-width: 375px) and (max-width: 575px) {
+  .message-bubble {
+    max-width: 85% !important;
+  }
+}
+
+/* 3. Large Mobile (576px - 767px) */
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .message-bubble {
+    max-width: 80% !important;
+  }
+}
+
+/* 4. Tablet (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .message-list-container {
+    padding: 16px 20px !important;
+  }
+
+  .message-bubble {
+    max-width: 75% !important;
+    padding: 10px 14px !important;
+  }
+}
+
+/* 5. Laptop & Desktop (1024px+) */
+@media screen and (min-width: 1024px) {
+  .message-list-container {
+    padding: 20px 28px !important;
+  }
+
+  .message-bubble {
+    max-width: 68% !important;
+    padding: 10px 16px !important;
+  }
+}

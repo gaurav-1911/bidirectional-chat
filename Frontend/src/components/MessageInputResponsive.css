@@ -1,0 +1,76 @@
+/* ==========================================================================
+   MessageInputResponsive.css
+   Responsive Styles for Message Input Component
+   ========================================================================== */
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+  .message-input-form {
+    padding: 8px 10px !important;
+    gap: 6px !important;
+  }
+
+  .message-input-wrapper {
+    padding: 4px 8px !important;
+    border-radius: 20px !important;
+  }
+
+  .message-input {
+    font-size: 0.9rem !important;
+    padding: 6px 4px !important;
+    min-height: 36px !important;
+  }
+
+  .input-action-btn,
+  .send-btn {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 6px !important;
+    min-width: 36px !important;
+  }
+
+  .input-action-btn svg,
+  .send-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .reply-preview-bar,
+  .edit-preview-bar {
+    padding: 6px 10px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .message-input-form {
+    padding: 6px 6px !important;
+    gap: 4px !important;
+  }
+
+  .input-action-btn,
+  .send-btn {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+  }
+
+  .input-action-btn svg,
+  .send-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .message-input {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* 2. Tablet & Above (768px+) */
+@media screen and (min-width: 768px) {
+  .message-input-form {
+    padding: 12px 18px !important;
+    gap: 10px !important;
+  }
+}

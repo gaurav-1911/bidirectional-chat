@@ -1,0 +1,39 @@
+/* ==========================================================================
+   ScreenShareConsentModalResponsive.css
+   Responsive Styles for Screen Share Consent Dialog
+   ========================================================================== */
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+  .consent-modal-overlay {
+    padding: 12px !important;
+  }
+
+  .consent-modal-card {
+    width: 100% !important;
+    max-width: 400px !important;
+    padding: 18px !important;
+    border-radius: 18px !important;
+  }
+
+  .consent-modal-buttons {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .consent-modal-buttons button {
+    width: 100% !important;
+    padding: 10px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .consent-modal-card {
+    padding: 14px !important;
+  }
+
+  .consent-modal-card h3 {
+    font-size: 1.05rem !important;
+  }
+}

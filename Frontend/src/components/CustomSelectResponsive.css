@@ -1,0 +1,24 @@
+/* ==========================================================================
+   CustomSelectResponsive.css
+   Responsive Styles for Custom Dropdown Component
+   ========================================================================== */
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+  .custom-select-button {
+    padding: 8px 12px !important;
+    font-size: 0.88rem !important;
+    min-height: 40px !important;
+  }
+
+  .custom-select-menu {
+    max-height: 220px !important;
+    border-radius: 14px !important;
+  }
+
+  .custom-select-option {
+    padding: 10px 12px !important;
+    font-size: 0.88rem !important;
+    min-height: 42px !important;
+  }
+}

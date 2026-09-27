@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { uploadFileApi } from '../services/userService';
 import { UnifiedPicker } from './UnifiedPicker';
+import './MessageInputResponsive.css';
 
 interface MessageInputProps {
   onSendMessage: (messageText: string, fileData?: { fileUrl: string; fileName: string; fileType: string }) => void;

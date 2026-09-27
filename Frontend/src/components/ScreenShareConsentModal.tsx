@@ -1,4 +1,5 @@
 import React from 'react';
+import './ScreenShareConsentModalResponsive.css';
 
 interface ScreenShareConsentModalProps {
   adminName: string;

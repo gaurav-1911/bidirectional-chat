@@ -1,0 +1,43 @@
+/* ==========================================================================
+   TechSectionResponsive.css
+   Responsive Styles for Technology Section Component
+   ========================================================================== */
+
+/* Mobile (< 768px): 1 Column */
+@media screen and (max-width: 767px) {
+  .landing-tech-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .landing-tech-card {
+    padding: 18px 16px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .landing-tech-card {
+    padding: 14px 12px !important;
+  }
+
+  .tech-card-title {
+    font-size: 1rem !important;
+  }
+}
+
+/* 2. Tablet (768px - 1023px): 2 Columns */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .landing-tech-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+  }
+}
+
+/* 3. Desktop (1024px+): 3 Columns */
+@media screen and (min-width: 1024px) {
+  .landing-tech-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px !important;
+  }
+}

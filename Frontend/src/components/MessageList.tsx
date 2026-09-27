@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { ChatMessage, UserProfile, CallRecord, ChatTarget } from '../types/chat.types';
 import { resolveMediaUrl } from '../utils/url.util';
+import './MessageListResponsive.css';
 
 interface MessageListProps {
   messages: ChatMessage[];

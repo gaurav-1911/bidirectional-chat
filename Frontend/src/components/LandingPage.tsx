@@ -11,6 +11,7 @@ import { FaqSection } from './landing/FaqSection';
 import { Footer } from './landing/Footer';
 import { BackToTop } from './landing/BackToTop';
 import { UserProfile } from '../types/chat.types';
+import './LandingPageResponsive.css';
 
 interface LandingPageProps {
   onAuthSuccess: (user: UserProfile) => void;

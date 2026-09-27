@@ -1,4 +1,5 @@
 import React from 'react';
+import './HowItWorksSectionResponsive.css';
 
 interface StepItem {
   number: string;

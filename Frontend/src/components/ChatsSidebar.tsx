@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserProfile, ChatMessage, RecentChatUser } from '../types/chat.types';
 import { getRecentChatUsersApi } from '../services/userService';
 import { getSocket } from '../services/socket';
+import './ChatsSidebarResponsive.css';
 
 interface ChatsSidebarProps {
   currentUser: UserProfile;

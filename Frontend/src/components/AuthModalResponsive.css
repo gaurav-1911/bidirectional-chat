@@ -1,0 +1,110 @@
+/* ==========================================================================
+   AuthModalResponsive.css
+   Responsive Styles for Authentication Modal Component
+   ========================================================================== */
+
+/* Mobile (< 768px): Fixed header & footer with scrollable body */
+@media screen and (max-width: 767px) {
+  .auth-modal-overlay {
+    padding: 10px !important;
+    align-items: center !important;
+  }
+
+  .auth-modal {
+    width: 100% !important;
+    max-width: 420px !important;
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  .auth-header {
+    padding: 16px 20px 12px 20px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .auth-header h2 {
+    font-size: 1.35rem !important;
+  }
+
+  .auth-header p {
+    font-size: 0.82rem !important;
+  }
+
+  .auth-body,
+  .auth-form-container {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    padding: 12px 20px !important;
+  }
+
+  .auth-form {
+    gap: 12px !important;
+  }
+
+  .auth-input-group label {
+    font-size: 0.82rem !important;
+  }
+
+  .auth-input {
+    padding: 10px 14px !important;
+    font-size: 0.9rem !important;
+    min-height: 42px !important;
+  }
+
+  .auth-submit-btn,
+  .google-auth-btn {
+    min-height: 44px !important;
+    font-size: 0.92rem !important;
+    padding: 10px 16px !important;
+  }
+
+  .auth-footer {
+    padding: 12px 20px 16px 20px !important;
+    flex-shrink: 0 !important;
+    font-size: 0.82rem !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .auth-modal-overlay {
+    padding: 6px !important;
+  }
+
+  .auth-modal {
+    max-height: 96vh !important;
+    max-height: 96dvh !important;
+  }
+
+  .auth-header {
+    padding: 12px 14px !important;
+  }
+
+  .auth-header h2 {
+    font-size: 1.18rem !important;
+  }
+
+  .auth-body,
+  .auth-form-container {
+    padding: 8px 14px !important;
+  }
+
+  .auth-input {
+    padding: 8px 10px !important;
+    font-size: 0.84rem !important;
+  }
+
+  .otp-inputs-row {
+    gap: 4px !important;
+  }
+
+  .otp-input-box {
+    width: 34px !important;
+    height: 42px !important;
+    font-size: 1.1rem !important;
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import './CustomSelectResponsive.css';
 
 export interface CustomSelectOption {
   value: string;

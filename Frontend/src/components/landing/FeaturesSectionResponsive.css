@@ -1,0 +1,47 @@
+/* ==========================================================================
+   FeaturesSectionResponsive.css
+   Responsive Styles for Features Grid Component
+   ========================================================================== */
+
+/* 1. Mobile (< 768px): Single Column */
+@media screen and (max-width: 767px) {
+  .landing-features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .landing-feature-card {
+    padding: 20px 18px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .landing-feature-card {
+    padding: 16px 14px !important;
+  }
+
+  .feature-card-title {
+    font-size: 1.1rem !important;
+  }
+
+  .feature-card-desc {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* 2. Tablet (768px - 1100px): 2 Columns */
+@media screen and (min-width: 768px) and (max-width: 1100px) {
+  .landing-features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+}
+
+/* 3. Desktop (1101px+): 3 Columns */
+@media screen and (min-width: 1101px) {
+  .landing-features-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 28px !important;
+  }
+}

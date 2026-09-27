@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserProfile, ChatMessage } from '../types/chat.types';
 import { getAllUsersApi } from '../services/userService';
 import './ForwardModal.css';
+import './ForwardModalResponsive.css';
 
 interface ForwardModalProps {
   currentUser: UserProfile;

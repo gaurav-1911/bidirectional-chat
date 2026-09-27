@@ -1,0 +1,103 @@
+/* ==========================================================================
+   HeroSectionResponsive.css
+   Responsive Styles for Landing Page Hero Section
+   ========================================================================== */
+
+/* Mobile & Tablet (< 1100px): Single Column Hero Layout */
+@media screen and (max-width: 1100px) {
+  .landing-hero-layout {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+    text-align: center !important;
+  }
+
+  .landing-hero-content {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .landing-hero-subtitle {
+    margin: 0 auto 2rem auto !important;
+    max-width: 580px !important;
+  }
+
+  .landing-hero-cta {
+    justify-content: center !important;
+  }
+
+  .landing-hero-trust {
+    justify-content: center !important;
+  }
+
+  .hero-floating-card {
+    position: static !important;
+    margin: 8px auto !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .landing-hero-title {
+    font-size: 1.65rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .landing-hero-subtitle {
+    font-size: 0.85rem !important;
+  }
+
+  .landing-hero-cta {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .landing-hero-btn {
+    width: 100% !important;
+    padding: 10px 16px !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+/* 2. Mobile (375px - 575px) */
+@media screen and (min-width: 375px) and (max-width: 575px) {
+  .landing-hero-title {
+    font-size: 1.95rem !important;
+  }
+
+  .landing-hero-cta {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .landing-hero-btn {
+    width: 100% !important;
+  }
+}
+
+/* 3. Large Mobile (576px - 767px) */
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .landing-hero-title {
+    font-size: 2.3rem !important;
+  }
+
+  .landing-hero-cta {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+/* 4. Tablet (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .landing-hero-title {
+    font-size: 2.75rem !important;
+  }
+}
+
+/* 5. Laptop & Desktop (1024px+) */
+@media screen and (min-width: 1024px) {
+  .landing-hero-title {
+    font-size: 3.2rem !important;
+  }
+}

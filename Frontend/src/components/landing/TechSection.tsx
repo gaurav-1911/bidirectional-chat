@@ -1,4 +1,5 @@
 import React from 'react';
+import './TechSectionResponsive.css';
 
 interface TechItem {
   badge: string;

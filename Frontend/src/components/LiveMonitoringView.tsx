@@ -9,6 +9,7 @@ import {
   MonitoringStats,
 } from '../services/monitoringService';
 import { resolveMediaUrl } from '../utils/url.util';
+import './LiveMonitoringViewResponsive.css';
 
 interface LiveMonitoringViewProps {
   currentUser: UserProfile;

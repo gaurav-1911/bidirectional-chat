@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './NavbarResponsive.css';
 
 interface NavbarProps {
   onOpenAuth: (mode: 'login' | 'register') => void;

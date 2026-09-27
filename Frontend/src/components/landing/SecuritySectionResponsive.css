@@ -1,0 +1,35 @@
+/* ==========================================================================
+   SecuritySectionResponsive.css
+   Responsive Styles for Security Features Component
+   ========================================================================== */
+
+/* Mobile (< 768px): 1 Column */
+@media screen and (max-width: 767px) {
+  .landing-security-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .landing-security-card {
+    padding: 20px 18px !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .landing-security-card {
+    padding: 16px 14px !important;
+  }
+
+  .security-card-title {
+    font-size: 1.05rem !important;
+  }
+}
+
+/* 2. Tablet & Above (768px+) */
+@media screen and (min-width: 768px) {
+  .landing-security-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px !important;
+  }
+}

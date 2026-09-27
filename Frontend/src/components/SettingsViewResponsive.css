@@ -1,0 +1,101 @@
+/* ==========================================================================
+   SettingsViewResponsive.css
+   Responsive Styles for Settings View Component
+   ========================================================================== */
+
+/* Mobile Stacked Layout (< 768px) */
+@media screen and (max-width: 767px) {
+  .settings-container {
+    flex-direction: column !important;
+    height: calc(100dvh - 60px) !important;
+    overflow-y: auto !important;
+  }
+
+  .settings-sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 12px !important;
+  }
+
+  .settings-nav-list {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .settings-nav-item {
+    white-space: nowrap !important;
+    padding: 8px 14px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .settings-content-area {
+    flex: 1 !important;
+    padding: 16px 14px 40px 14px !important;
+    overflow-y: visible !important;
+  }
+
+  .settings-section-card {
+    padding: 14px !important;
+    margin-bottom: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .settings-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    padding: 12px 0 !important;
+  }
+
+  .settings-input,
+  .settings-select {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .settings-content-area {
+    padding: 10px 8px 30px 8px !important;
+  }
+
+  .settings-section-card {
+    padding: 10px !important;
+  }
+
+  .settings-nav-item {
+    padding: 6px 10px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* 2. Tablet (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .settings-sidebar {
+    width: 240px !important;
+    min-width: 240px !important;
+  }
+
+  .settings-content-area {
+    padding: 24px 20px !important;
+  }
+}
+
+/* 3. Laptop & Desktop (1024px+) */
+@media screen and (min-width: 1024px) {
+  .settings-sidebar {
+    width: 280px !important;
+    min-width: 280px !important;
+  }
+
+  .settings-content-area {
+    padding: 32px 40px !important;
+  }
+}

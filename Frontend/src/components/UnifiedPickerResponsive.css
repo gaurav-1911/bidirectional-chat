@@ -1,0 +1,54 @@
+/* ==========================================================================
+   UnifiedPickerResponsive.css
+   Responsive Styles for Unified Emoji & GIF Picker Component
+   ========================================================================== */
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+  .unified-picker-container {
+    position: fixed !important;
+    bottom: 64px !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: calc(100% - 16px) !important;
+    max-width: 100% !important;
+    height: 380px !important;
+    max-height: 50vh !important;
+    border-radius: 16px !important;
+    z-index: 1050 !important;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .picker-tabs {
+    padding: 6px 10px !important;
+    gap: 6px !important;
+  }
+
+  .picker-tab-btn {
+    font-size: 0.82rem !important;
+    padding: 6px 12px !important;
+    min-height: 36px !important;
+  }
+
+  /* Emoji Mart responsive sizing */
+  em-emoji-picker {
+    --category-icon-size: 18px;
+    --font-size: 14px;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .unified-picker-container {
+    height: 320px !important;
+    bottom: 56px !important;
+  }
+
+  .picker-tab-btn {
+    font-size: 0.75rem !important;
+    padding: 4px 8px !important;
+  }
+}

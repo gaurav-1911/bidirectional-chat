@@ -1,0 +1,51 @@
+/* ==========================================================================
+   MessageOptionsResponsive.css
+   Responsive Styles for Message Options Context Menu & Popup
+   ========================================================================== */
+
+/* Mobile Bottom Sheet (< 768px) */
+@media screen and (max-width: 767px) {
+  .message-options-modal {
+    width: calc(100% - 24px) !important;
+    max-width: 360px !important;
+    padding: 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .quick-reactions-row {
+    gap: 8px !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .quick-reaction-btn {
+    font-size: 1.3rem !important;
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .option-item {
+    padding: 10px 12px !important;
+    font-size: 0.9rem !important;
+    min-height: 44px !important; /* Touch target */
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .message-options-modal {
+    width: calc(100% - 16px) !important;
+    padding: 10px !important;
+  }
+
+  .quick-reaction-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1.15rem !important;
+  }
+
+  .option-item {
+    padding: 8px 10px !important;
+    font-size: 0.82rem !important;
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TypingText } from '../TypingText';
 import { ChatPreview } from '../ChatPreview';
+import './HeroSectionResponsive.css';
 
 interface HeroSectionProps {
   onOpenAuth: (mode: 'login' | 'register') => void;

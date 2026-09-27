@@ -1,0 +1,65 @@
+/* ==========================================================================
+   GroupDetailsModalResponsive.css
+   Responsive Styles for Group Management & Creation Modals
+   ========================================================================== */
+
+/* Mobile Modal Layout (< 768px) */
+@media screen and (max-width: 767px) {
+  .group-modal,
+  .create-group-modal {
+    width: 95% !important;
+    max-width: 440px !important;
+    max-height: 88vh !important;
+    max-height: 88dvh !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .group-modal-header {
+    padding: 14px 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .group-modal-header h3 {
+    font-size: 1.15rem !important;
+  }
+
+  .group-modal-body {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    padding: 14px 18px !important;
+  }
+
+  .group-members-list {
+    max-height: 220px !important;
+  }
+
+  .member-item {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+
+  .group-modal-footer {
+    padding: 12px 18px !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* 1. Small Mobile (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .group-modal,
+  .create-group-modal {
+    width: 98% !important;
+  }
+
+  .group-modal-header,
+  .group-modal-body,
+  .group-modal-footer {
+    padding: 10px 12px !important;
+  }
+
+  .group-modal-header h3 {
+    font-size: 1rem !important;
+  }
+}
