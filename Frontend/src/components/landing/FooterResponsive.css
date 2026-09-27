@@ -7,18 +7,19 @@
 @media screen and (max-width: 860px) {
   .landing-footer-grid {
     grid-template-columns: 1fr !important;
-    gap: 2rem !important;
+    gap: 2.25rem !important;
+    padding-bottom: 2.5rem !important;
   }
 
   .landing-footer {
-    padding: 3rem 0 1.5rem 0 !important;
+    padding: 3.5rem 0 1.5rem 0 !important;
   }
 
   .landing-footer-bottom {
     flex-direction: column !important;
     gap: 12px !important;
     text-align: center !important;
-    padding-top: 1.5rem !important;
+    padding: 1.75rem 0 3.25rem 0 !important;
   }
 }
 
@@ -28,7 +29,8 @@
     font-size: 0.82rem !important;
   }
 
-  .footer-links-list a {
+  .footer-links-list a,
+  .footer-action-link {
     font-size: 0.85rem !important;
     padding: 4px 0 !important;
   }
@@ -37,12 +39,16 @@
     font-size: 0.82rem !important;
     word-break: break-all !important;
   }
+
+  .landing-footer-bottom {
+    padding: 1.5rem 0 3.5rem 0 !important;
+  }
 }
 
 /* 2. Desktop (861px+) */
 @media screen and (min-width: 861px) {
   .landing-footer-grid {
     grid-template-columns: 2fr 1fr 1fr !important;
-    gap: 3.5rem !important;
+    gap: 4rem !important;
   }
 }

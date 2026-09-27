@@ -73,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAuth }) => {
 
         {/* Resources & Account */}
         <div className="landing-footer-col">
-          <h4 className="footer-col-title">Account</h4>
+          <h4 className="footer-col-title">Account & Platform</h4>
           <ul className="footer-links-list">
             <li>
               <button
@@ -90,14 +90,28 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAuth }) => {
                 className="footer-action-link"
                 onClick={() => onOpenAuth('register')}
               >
-                Get Started
+                Get Started Free
               </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="footer-action-link"
+                onClick={() => onOpenAuth('login')}
+              >
+                Live Monitoring
+              </button>
+            </li>
+            <li>
+              <a href="#hero" onClick={handleScrollToTop} className="footer-action-link">
+                Back to Top ↑
+              </a>
             </li>
           </ul>
         </div>
       </div>
 
-      {/* Bottom Legal Notice */}
+      {/* Bottom Legal Notice with Generous Spacing */}
       <div className="landing-footer-bottom">
         <div className="landing-container footer-bottom-container">
           <p className="copyright-text">
