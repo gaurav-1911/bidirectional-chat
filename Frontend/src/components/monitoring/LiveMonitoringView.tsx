@@ -310,51 +310,40 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
       setTimeout(() => setErrorMsg(''), 3000);
     }
   };  return (
-    <div style={{ display: 'flex', width: '100%', height: '100%', background: 'var(--bg-dark, #0b0f19)', color: 'var(--text-main, #fff)', overflow: 'hidden' }}>
+    <div className="live-monitoring-layout">
       
       {/* ── Left Target Users Sidebar ──────────────────────── */}
-      <div style={{
-        width: '320px',
-        flexShrink: 0,
-        borderRight: '1px solid var(--border-color)',
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'var(--sidebar-bg, #131b2e)',
-      }}>
-        <div style={{ padding: '24px 20px', borderBottom: '1px solid var(--border-color)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-            <div style={{
-              width: '36px', height: '36px', borderRadius: '10px',
-              background: 'linear-gradient(135deg, #ef4444, #f97316)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
+      <div className="monitoring-sidebar">
+        <div className="monitoring-sidebar-header">
+          <div className="monitoring-brand-row">
+            <div className="monitoring-brand-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="3"></circle>
                 <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
               </svg>
             </div>
             <div>
-              <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--text-main)' }}>Live Monitoring</h2>
-              <span style={{ fontSize: '12px', color: '#4ade80', fontWeight: '600' }}>● Real-Time Feed</span>
+              <h2 className="monitoring-brand-title">Live Monitoring</h2>
+              <span className="monitoring-brand-sub">● Real-Time Feed</span>
             </div>
           </div>
 
           {/* Quick Telemetry Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginTop: '16px' }}>
-            <div style={{ background: 'var(--input-bg, #f1f5f9)', padding: '10px 12px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-              <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-muted)' }}>Active Online</span>
-              <div style={{ fontSize: '18px', fontWeight: '700', color: '#16a34a', marginTop: '2px' }}>{stats?.onlineCount ?? 0}</div>
+          <div className="monitoring-telemetry-grid">
+            <div className="telemetry-card">
+              <span className="telemetry-label">Active Online</span>
+              <div className="telemetry-value" style={{ color: '#16a34a' }}>{stats?.onlineCount ?? 0}</div>
             </div>
-            <div style={{ background: 'var(--input-bg, #f1f5f9)', padding: '10px 12px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-              <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-muted)' }}>Snapshots</span>
-              <div style={{ fontSize: '18px', fontWeight: '700', color: 'var(--accent-color, #6366f1)', marginTop: '2px' }}>{stats?.totalScreenshots ?? 0}</div>
+            <div className="telemetry-card">
+              <span className="telemetry-label">Snapshots</span>
+              <div className="telemetry-value" style={{ color: 'var(--accent-color, #6366f1)' }}>{stats?.totalScreenshots ?? 0}</div>
             </div>
           </div>
         </div>
 
         {/* User Selection List */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', paddingLeft: '6px', paddingRight: '6px' }}>
+        <div className="monitoring-user-list">
+          <div className="monitoring-list-header">
             <p style={{ margin: 0, fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-muted, #94a3b8)' }}>
               Online Users
             </p>
@@ -364,12 +353,12 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
           </div>
 
           {(!stats?.onlineUsers || stats.onlineUsers.length === 0) ? (
-            <div style={{ textAlign: 'center', padding: '36px 12px', color: 'var(--text-muted, #94a3b8)' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <div style={{ textAlign: 'center', padding: '24px 12px', color: 'var(--text-muted, #94a3b8)' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
               </div>
               <p style={{ fontSize: '13px', margin: '0 0 4px', fontWeight: '600', color: 'var(--text-main, #fff)' }}>No users online</p>
-              <p style={{ fontSize: '11.5px', margin: 0 }}>Active users with an open connection will appear here</p>
+              <p style={{ fontSize: '11px', margin: 0 }}>Active users will appear here</p>
             </div>
           ) : (
             (stats.onlineUsers).map((u) => {
@@ -378,38 +367,27 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
               return (
                 <div
                   key={u._id}
+                  className={`monitoring-user-item ${isSelected ? 'selected' : ''}`}
                   onClick={() => {
                     if (selectedUser?._id !== u._id) {
                       stopMonitoringSession();
                       setSelectedUser(u);
                     }
                   }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    padding: '12px',
-                    borderRadius: '12px',
-                    cursor: 'pointer',
-                    background: isSelected ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
-                    border: isSelected ? '1px solid rgba(99, 102, 241, 0.4)' : '1px solid transparent',
-                    marginBottom: '6px',
-                    transition: 'all 0.2s ease',
-                  }}
                 >
                   <div style={{ position: 'relative' }}>
-                    <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700' }}>
+                    <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.9rem' }}>
                       {u.avatar ? <img src={u.avatar} alt={u.username} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : u.username.charAt(0).toUpperCase()}
                     </div>
-                    <div style={{ position: 'absolute', bottom: '0', right: '0', width: '12px', height: '12px', borderRadius: '50%', background: '#4ade80', border: '2px solid #131b2e' }} />
+                    <div style={{ position: 'absolute', bottom: '0', right: '0', width: '10px', height: '10px', borderRadius: '50%', background: '#4ade80', border: '2px solid #131b2e' }} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      <h4 style={{ margin: 0, fontSize: '13.5px', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {u.username} {isSelf && '(You)'}
                       </h4>
                     </div>
-                    <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted, #94a3b8)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p style={{ margin: 0, fontSize: '11.5px', color: 'var(--text-muted, #94a3b8)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {u.email}
                     </p>
                   </div>
@@ -421,16 +399,16 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
       </div>
 
       {/* ── Main Monitoring Stage ─────────────────────────── */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto', padding: '24px 32px' }}>
+      <div className="monitoring-main-panel">
         
         {/* Toast Notification */}
         {successMsg && (
-          <div style={{ padding: '12px 18px', background: 'rgba(74, 222, 128, 0.15)', border: '1px solid rgba(74, 222, 128, 0.3)', color: '#4ade80', borderRadius: '12px', marginBottom: '16px', fontSize: '13px', fontWeight: '600' }}>
+          <div style={{ padding: '10px 14px', background: 'rgba(74, 222, 128, 0.15)', border: '1px solid rgba(74, 222, 128, 0.3)', color: '#4ade80', borderRadius: '12px', marginBottom: '14px', fontSize: '13px', fontWeight: '600' }}>
             {successMsg}
           </div>
         )}
         {errorMsg && (
-          <div style={{ padding: '12px 18px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', borderRadius: '12px', marginBottom: '16px', fontSize: '13px', fontWeight: '600' }}>
+          <div style={{ padding: '10px 14px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', borderRadius: '12px', marginBottom: '14px', fontSize: '13px', fontWeight: '600' }}>
             {errorMsg}
           </div>
         )}
@@ -438,25 +416,13 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
         {selectedUser ? (
           <>
             {/* Header Control Toolbar */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '16px 20px',
-              background: 'var(--bg-card, #131b2e)',
-              borderRadius: '16px',
-              border: '1px solid var(--border-color)',
-              marginBottom: '20px',
-              flexWrap: 'wrap',
-              gap: '12px',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '14px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700' }}>
+            <div className="monitoring-toolbar">
+              <div className="monitoring-target-info">
+                <div className="monitoring-target-avatar">
                   {selectedUser.avatar ? <img src={selectedUser.avatar} alt={selectedUser.username} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : selectedUser.username.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h3 style={{ margin: '0 0 2px 0', fontSize: '17px', fontWeight: '700', color: 'var(--text-main)' }}>{selectedUser.username}</h3>
+                  <h3 style={{ margin: '0 0 2px 0', fontSize: '16px', fontWeight: '700', color: 'var(--text-main)' }}>{selectedUser.username}</h3>
                   <span style={{ fontSize: '12px', color: isStreaming ? '#16a34a' : 'var(--text-muted)' }}>
                     {isStreaming ? '● Live Stream Broadcasting' : 'Ready to Monitor'}
                   </span>
@@ -464,10 +430,10 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
               </div>
 
               {/* Action Buttons & Interval Select */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+              <div className="monitoring-actions-group">
                 
                 {/* Interval Selector */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'var(--input-bg, #f1f5f9)', padding: '6px 12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                <div className="monitoring-select-wrapper">
                   <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Interval:</span>
                   <select
                     value={intervalSeconds}
@@ -497,9 +463,9 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                   type="button"
                   onClick={() => setAutoCaptureActive(!autoCaptureActive)}
                   style={{
-                    padding: '8px 14px',
+                    padding: '8px 12px',
                     borderRadius: '10px',
-                    background: autoCaptureActive ? 'rgba(74, 222, 128, 0.18)' : 'var(--input-bg, #f1f5f9)',
+                    background: autoCaptureActive ? 'rgba(74, 222, 128, 0.18)' : 'var(--input-bg, rgba(15, 23, 42, 0.6))',
                     color: autoCaptureActive ? '#16a34a' : 'var(--text-muted)',
                     border: autoCaptureActive ? '1px solid rgba(74, 222, 128, 0.4)' : '1px solid var(--border-color)',
                     fontSize: '12px',
@@ -507,7 +473,7 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                     cursor: 'pointer',
                   }}
                 >
-                  {autoCaptureActive ? '⏱ Auto-Capture ON' : '⏱ Auto-Capture OFF'}
+                  {autoCaptureActive ? '⏱ Auto ON' : '⏱ Auto OFF'}
                 </button>
 
                 {/* Instant Manual Snapshot Button */}
@@ -530,7 +496,7 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                     }}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                    Take Snapshot
+                    Snapshot
                   </button>
                 )}
 
@@ -540,12 +506,12 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                     type="button"
                     onClick={stopMonitoringSession}
                     style={{
-                      padding: '8px 16px',
+                      padding: '8px 14px',
                       borderRadius: '10px',
                       background: 'linear-gradient(135deg, #ef4444, #dc2626)',
                       color: '#fff',
                       border: 'none',
-                      fontSize: '13px',
+                      fontSize: '12px',
                       fontWeight: '600',
                       cursor: 'pointer',
                       display: 'flex',
@@ -554,7 +520,7 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                     }}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
-                    Stop Monitoring
+                    Stop
                   </button>
                 ) : (
                   <button
@@ -562,12 +528,12 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                     onClick={() => startMonitoringSession(selectedUser)}
                     disabled={isConnectingStream}
                     style={{
-                      padding: '8px 18px',
+                      padding: '8px 16px',
                       borderRadius: '10px',
                       background: 'linear-gradient(135deg, var(--accent-color, #6366f1), #8b5cf6)',
                       color: '#fff',
                       border: 'none',
-                      fontSize: '13px',
+                      fontSize: '12px',
                       fontWeight: '600',
                       cursor: isConnectingStream ? 'not-allowed' : 'pointer',
                       display: 'flex',
@@ -579,7 +545,7 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                     {isConnectingStream ? (
                       <>
                         <svg className="spin-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
-                        Requesting Stream...
+                        Requesting...
                       </>
                     ) : (
                       <>
@@ -593,49 +559,32 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
             </div>
 
             {/* Video Viewport Card */}
-            <div style={{
-              width: '100%',
-              minHeight: '380px',
-              maxHeight: '520px',
-              aspectRatio: '16 / 9',
-              borderRadius: '20px',
-              background: '#070b13',
-              border: '1px solid var(--border-color, rgba(255,255,255,0.12))',
-              position: 'relative',
-              overflow: 'hidden',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 12px 36px rgba(0,0,0,0.6)',
-              marginBottom: '28px',
-            }}>
+            <div className="monitoring-stream-wrapper">
               <video
                 ref={remoteVideoRef}
                 autoPlay
                 playsInline
                 muted
+                className="monitoring-stream-video"
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
                   display: isStreaming ? 'block' : 'none',
                 }}
               />
 
               {!isStreaming && (
-                <div style={{ textAlign: 'center', padding: '30px' }}>
+                <div style={{ textAlign: 'center', padding: '24px 16px' }}>
                   <div style={{
-                    width: '64px', height: '64px', borderRadius: '50%',
+                    width: '56px', height: '56px', borderRadius: '50%',
                     background: 'rgba(99, 102, 241, 0.1)',
                     border: '1px dashed rgba(99, 102, 241, 0.4)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    margin: '0 auto 16px',
+                    margin: '0 auto 12px',
                   }}>
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color, #6366f1)" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color, #6366f1)" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                   </div>
-                  <h3 style={{ margin: '0 0 6px 0', fontSize: '18px', fontWeight: '700' }}>Live Screen Stream Offline</h3>
-                  <p style={{ margin: '0 0 16px 0', color: 'var(--text-muted, #94a3b8)', fontSize: '13px' }}>
-                    Click "Start Live Stream" above to stream {selectedUser.username}'s desktop/tab in real-time.
+                  <h3 style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: '700' }}>Live Screen Stream Offline</h3>
+                  <p style={{ margin: '0', color: 'var(--text-muted, #94a3b8)', fontSize: '12px' }}>
+                    Click "Start Live Stream" above to stream {selectedUser.username}'s screen in real-time.
                   </p>
                 </div>
               )}
@@ -643,8 +592,8 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
 
             {/* ── Screenshot History Gallery ──────────────────── */}
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                <h3 style={{ margin: 0, fontSize: '17px', fontWeight: '700' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '700' }}>
                   Captured Activity Snapshots ({screenshots.length})
                 </h3>
                 <button
@@ -657,21 +606,21 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
               </div>
 
               {loadingScreenshots ? (
-                <div style={{ padding: '30px', textAlign: 'center', color: 'var(--text-muted, #94a3b8)' }}>Loading snapshots...</div>
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted, #94a3b8)' }}>Loading snapshots...</div>
               ) : screenshots.length === 0 ? (
                 <div style={{
-                  padding: '36px',
+                  padding: '28px 16px',
                   borderRadius: '16px',
                   background: 'var(--bg-card, #131b2e)',
                   border: '1px dashed var(--border-color, rgba(255,255,255,0.1))',
                   textAlign: 'center',
                   color: 'var(--text-muted, #94a3b8)',
-                  fontSize: '13px',
+                  fontSize: '12.5px',
                 }}>
-                  No screenshots recorded yet. Start live monitoring or click "Take Snapshot" to capture activity.
+                  No screenshots recorded yet. Start live monitoring or click "Snapshot" to capture activity.
                 </div>
               ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '16px' }}>
+                <div className="monitoring-gallery-grid">
                   {screenshots.map((s) => (
                     <div
                       key={s._id}
@@ -686,7 +635,7 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                     >
                       <div
                         onClick={() => setSelectedImage(resolveMediaUrl(s.imageUrl))}
-                        style={{ height: '160px', overflow: 'hidden', cursor: 'pointer', position: 'relative', background: '#020617' }}
+                        style={{ height: '140px', overflow: 'hidden', cursor: 'pointer', position: 'relative', background: '#020617' }}
                       >
                         <img
                           src={resolveMediaUrl(s.imageUrl)}
@@ -700,19 +649,19 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
                           }}
                         />
                         <span style={{
-                          position: 'absolute', top: '8px', left: '8px',
+                          position: 'absolute', top: '6px', left: '6px',
                           background: 'rgba(0,0,0,0.75)',
                           backdropFilter: 'blur(4px)',
                           color: s.captureType === 'manual' ? '#10b981' : '#818cf8',
-                          padding: '3px 8px', borderRadius: '6px', fontSize: '10px', fontWeight: '700',
+                          padding: '2px 6px', borderRadius: '6px', fontSize: '9.5px', fontWeight: '700',
                           textTransform: 'uppercase',
                         }}>
                           {s.captureType}
                         </span>
                       </div>
 
-                      <div style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
-                        <div style={{ fontSize: '11.5px', color: 'var(--text-muted, #94a3b8)', fontWeight: '500' }}>
+                      <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted, #94a3b8)', fontWeight: '500' }}>
                           {new Date(s.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                         </div>
                         <button
@@ -739,8 +688,8 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
             </div>
           </>
         ) : (
-          <div style={{ margin: 'auto', textAlign: 'center', color: 'var(--text-muted, #94a3b8)' }}>
-            Please select an online user from the left sidebar to start monitoring.
+          <div style={{ margin: 'auto', textAlign: 'center', color: 'var(--text-muted, #94a3b8)', padding: '24px' }}>
+            Please select an online user from the user list to start monitoring.
           </div>
         )}
       </div>
@@ -755,18 +704,19 @@ export function LiveMonitoringView({ currentUser }: LiveMonitoringViewProps) {
             backdropFilter: 'blur(8px)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             zIndex: 99999,
-            padding: '24px',
+            padding: '16px',
           }}
         >
-          <div style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
-            <img src={selectedImage} alt="Full Resolution" style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.2)' }} />
+          <div style={{ position: 'relative', maxWidth: '95vw', maxHeight: '90vh' }}>
+            <img src={selectedImage} alt="Full Resolution" style={{ maxWidth: '100%', maxHeight: '88vh', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.2)', objectFit: 'contain' }} />
             <button
               onClick={() => setSelectedImage(null)}
               style={{
-                position: 'absolute', top: '-14px', right: '-14px',
+                position: 'absolute', top: '-12px', right: '-12px',
                 width: '32px', height: '32px', borderRadius: '50%',
                 background: '#ef4444', color: '#fff', border: 'none',
-                cursor: 'pointer', fontWeight: 'bold',
+                cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
               }}
             >
               ✕
