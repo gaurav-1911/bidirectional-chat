@@ -12,7 +12,7 @@ const TECHNOLOGIES: TechItem[] = [
   {
     badge: 'Frontend',
     name: 'React 18 & TypeScript',
-    description: 'Component architecture bundled with Vite for rapid HMR, strict type safety, and optimized responsive layouts.',
+    description: 'Component architecture bundled with Vite for rapid HMR, strict type safety, and optimized responsive layouts across all devices.',
     specs: ['Strict TypeScript', 'Vite Bundler', 'CSS Custom Tokens'],
   },
   {
@@ -24,14 +24,26 @@ const TECHNOLOGIES: TechItem[] = [
   {
     badge: 'Backend',
     name: 'Node.js & Express.js',
-    description: 'RESTful API gateway managing authentication middleware, rate limits, user management, and file upload services.',
+    description: 'RESTful API gateway managing authentication middleware, rate limits, user management, and secure file upload pipelines.',
     specs: ['Stateless API Endpoints', 'CORS Safeguards', 'Modular Controllers'],
   },
   {
     badge: 'Database',
     name: 'MongoDB Atlas & Mongoose',
-    description: 'High-availability document database storing structured user profiles, encrypted credentials, conversation threads, and call history.',
+    description: 'High-availability document database storing structured user profiles, encrypted credentials, conversation threads, and call records.',
     specs: ['Cloud Managed', 'Schema Indexing', 'Optimized Queries'],
+  },
+  {
+    badge: 'Media & Voice',
+    name: 'WebRTC & Web Audio API',
+    description: 'Peer-to-peer crystal clear audio/video streaming with ICE/STUN negotiation and in-browser Opus voice note waveform recording.',
+    specs: ['STUN/TURN ICE', 'Low-Latency Media', 'Opus Audio Codec'],
+  },
+  {
+    badge: 'Verification',
+    name: 'Nodemailer SMTP & Google SSO',
+    description: 'Transactional email delivery for 6-digit OTP verification codes paired with verified Google Identity Services one-tap onboarding.',
+    specs: ['Gmail SMTP Relay', 'OAuth 2.0 Identity', '6-Digit OTP Protocol'],
   },
 ];
 

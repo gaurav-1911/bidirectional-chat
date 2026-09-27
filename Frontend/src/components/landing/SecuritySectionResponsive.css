@@ -26,8 +26,16 @@
   }
 }
 
-/* 2. Tablet & Above (768px+) */
-@media screen and (min-width: 768px) {
+/* 2. Tablet (768px - 1023px): 2 Columns */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .landing-security-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+}
+
+/* 3. Desktop (1024px+): 3 Columns */
+@media screen and (min-width: 1024px) {
   .landing-security-grid {
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 24px !important;

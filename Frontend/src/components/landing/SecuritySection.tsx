@@ -16,7 +16,7 @@ const SECURITY_ITEMS: SecurityItem[] = [
   {
     tag: 'CREDENTIAL STORAGE',
     title: 'Bcrypt Password Salt & Hashing',
-    description: 'User passwords are cryptographically salted and hashed on the server prior to persistence. Plaintext passwords are never stored or logged.',
+    description: 'User passwords are cryptographically salted and hashed on the server prior to persistence. Plaintext passwords are never stored or logged in databases.',
   },
   {
     tag: 'NETWORK ISOLATION',
@@ -27,6 +27,16 @@ const SECURITY_ITEMS: SecurityItem[] = [
     tag: 'INJECTION DEFENSE',
     title: 'Input Validation & HTML Sanitization',
     description: 'Client schemas validated through Yup coupled with server-side validation and DOMPurify sanitization to neutralize XSS vectors in conversation streams.',
+  },
+  {
+    tag: 'CONSENT & PRIVACY',
+    title: 'Explicit Screen Share & Stream Consent',
+    description: 'Mandatory active user confirmation prompts before initiating live display media capture or administrative screen monitoring, preventing unauthorized viewing.',
+  },
+  {
+    tag: 'INFRASTRUCTURE DEFENSE',
+    title: 'Helmet HTTP Headers & Rate Limiting',
+    description: 'Automated HTTP response header protection against MIME sniffing, clickjacking, and DDoS flood attacks paired with 25MB strict payload isolation.',
   },
 ];
 
