@@ -46,10 +46,11 @@ httpServer.on('error', (err: NodeJS.ErrnoException) => {
   }
 });
 
-// Start listening
-httpServer.listen(config.port, () => {
-  logger.info(`🚀 Backend server listening on port ${config.port}`);
-  logger.info(`🔗 CORS configured for localhost & ngrok tunnels`);
+// Start listening on 0.0.0.0 for containerized cloud deployment (Render)
+const PORT = Number(process.env.PORT) || Number(config.port) || 5000;
+httpServer.listen(PORT, '0.0.0.0', () => {
+  logger.info(`🚀 Backend server listening on http://0.0.0.0:${PORT}`);
+  logger.info(`🔗 CORS configured for live frontend and localhost`);
 });
 
 // Graceful shutdown
