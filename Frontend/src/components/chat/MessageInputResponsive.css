@@ -1,76 +1,178 @@
 /* ==========================================================================
    MessageInputResponsive.css
-   Responsive Styles for Message Input Component
+   Master Responsive Styles for Chat Message Input Bar
    ========================================================================== */
 
-/* Mobile (< 768px) */
-@media screen and (max-width: 767px) {
-  .message-input-form {
-    padding: 8px 10px !important;
-    gap: 6px !important;
-  }
-
-  .message-input-wrapper {
-    padding: 4px 8px !important;
-    border-radius: 20px !important;
-  }
-
-  .message-input {
-    font-size: 0.9rem !important;
-    padding: 6px 4px !important;
-    min-height: 36px !important;
-  }
-
-  .input-action-btn,
-  .send-btn {
-    width: 36px !important;
-    height: 36px !important;
-    padding: 6px !important;
-    min-width: 36px !important;
-  }
-
-  .input-action-btn svg,
-  .send-btn svg {
-    width: 18px !important;
-    height: 18px !important;
-  }
-
-  .reply-preview-bar,
-  .edit-preview-bar {
-    padding: 6px 10px !important;
-    font-size: 0.78rem !important;
-  }
+/* Universal Message Input Base */
+.message-input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sidebar-bg, #0f172a);
 }
 
-/* 1. Small Mobile (320px - 374px) */
-@media screen and (max-width: 374px) {
+.file-preview-banner,
+.reply-edit-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: rgba(30, 41, 59, 0.95);
+  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+}
+
+.clear-file-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #94a3b8);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.clear-file-btn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.input-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-divider {
+  width: 1px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.12);
+  margin: 0 4px;
+}
+
+.send-icon-btn {
+  background: var(--accent-gradient, linear-gradient(135deg, #6366f1 0%, #a855f7 100%)) !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+}
+
+.send-icon-btn:disabled {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Mobile (< 768px): Compact, Finger-Friendly & High-Visibility Placeholders
+   ========================================================================== */
+@media screen and (max-width: 767px) {
   .message-input-form {
-    padding: 6px 6px !important;
+    padding: 8px 10px 10px 10px !important;
+    gap: 0 !important;
+    border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08)) !important;
+  }
+
+  .input-wrapper {
+    padding: 4px 6px 4px 12px !important;
+    border-radius: 20px !important;
+    background: rgba(15, 23, 42, 0.8) !important;
     gap: 4px !important;
   }
 
-  .input-action-btn,
-  .send-btn {
+  .message-input {
+    font-size: 16px !important; /* Prevents auto-zoom on iOS safari */
+    padding: 6px 4px !important;
+    min-height: 38px !important;
+    line-height: 1.35 !important;
+  }
+
+  .message-input::placeholder {
+    font-size: 0.88rem !important;
+    color: var(--text-muted, #94a3b8) !important;
+    opacity: 0.75 !important;
+  }
+
+  .input-actions {
+    gap: 2px !important;
+  }
+
+  .icon-btn {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 6px !important;
+    min-width: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .icon-btn svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .send-icon-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+  }
+
+  .action-divider {
+    margin: 0 2px !important;
+    height: 16px !important;
+  }
+
+  .reply-edit-banner,
+  .file-preview-banner {
+    padding: 6px 10px !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+/* 1. Small Mobile (<= 320px) */
+@media screen and (max-width: 320px) {
+  .message-input-form {
+    padding: 6px 6px 8px 6px !important;
+  }
+
+  .input-wrapper {
+    padding: 2px 4px 2px 8px !important;
+    border-radius: 16px !important;
+  }
+
+  .message-input::placeholder {
+    font-size: 0.80rem !important;
+  }
+
+  .icon-btn {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    padding: 4px !important;
+  }
+
+  .icon-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .send-icon-btn {
     width: 32px !important;
     height: 32px !important;
     min-width: 32px !important;
   }
+}
 
-  .input-action-btn svg,
-  .send-btn svg {
-    width: 16px !important;
-    height: 16px !important;
+/* 2. Tablet & Desktop (>= 768px) */
+@media screen and (min-width: 768px) {
+  .message-input-form {
+    padding: 12px 20px 16px 20px !important;
+  }
+
+  .input-wrapper {
+    padding: 4px 8px 4px 16px !important;
   }
 
   .message-input {
-    font-size: 0.85rem !important;
-  }
-}
-
-/* 2. Tablet & Above (768px+) */
-@media screen and (min-width: 768px) {
-  .message-input-form {
-    padding: 12px 18px !important;
-    gap: 10px !important;
+    font-size: 0.95rem !important;
   }
 }

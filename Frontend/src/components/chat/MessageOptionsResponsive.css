@@ -3,49 +3,72 @@
    Responsive Styles for Message Options Context Menu & Popup
    ========================================================================== */
 
-/* Mobile Bottom Sheet (< 768px) */
+/* Mobile Touch & Layout (< 768px) */
 @media screen and (max-width: 767px) {
-  .message-options-modal {
-    width: calc(100% - 24px) !important;
-    max-width: 360px !important;
-    padding: 12px !important;
+  .message-options-container {
+    opacity: 1 !important;
+    visibility: visible !important;
+    top: -14px !important;
+  }
+
+  .message-options-container.own {
+    right: 10px !important;
+  }
+
+  .message-options-container.other {
+    left: 10px !important;
+  }
+
+  .message-options-bar {
+    padding: 2px 6px !important;
+    gap: 2px !important;
     border-radius: 16px !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
   }
 
-  .quick-reactions-row {
-    gap: 8px !important;
-    padding-bottom: 10px !important;
-    margin-bottom: 8px !important;
+  .emoji-btn {
+    font-size: 14px !important;
+    padding: 3px !important;
   }
 
-  .quick-reaction-btn {
-    font-size: 1.3rem !important;
-    width: 38px !important;
-    height: 38px !important;
+  .option-btn {
+    width: 26px !important;
+    height: 26px !important;
   }
 
-  .option-item {
-    padding: 10px 12px !important;
-    font-size: 0.9rem !important;
-    min-height: 44px !important; /* Touch target */
+  .message-options-dropdown {
+    min-width: 190px !important;
+    max-width: calc(100vw - 32px) !important;
+    padding: 8px !important;
+    border-radius: 14px !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+    z-index: 9999 !important;
+  }
+
+  .dropdown-item {
+    padding: 12px 14px !important;
+    font-size: 0.92rem !important;
+    min-height: 44px !important; /* Comfortable mobile touch target */
+    border-radius: 10px !important;
   }
 }
 
-/* 1. Small Mobile (320px - 374px) */
-@media screen and (max-width: 374px) {
-  .message-options-modal {
-    width: calc(100% - 16px) !important;
-    padding: 10px !important;
+/* 1. Small Mobile (<= 320px) */
+@media screen and (max-width: 320px) {
+  .message-options-dropdown {
+    width: 260px !important;
+    padding: 6px !important;
   }
 
-  .quick-reaction-btn {
-    width: 32px !important;
-    height: 32px !important;
-    font-size: 1.15rem !important;
-  }
-
-  .option-item {
-    padding: 8px 10px !important;
-    font-size: 0.82rem !important;
+  .dropdown-item {
+    padding: 10px 12px !important;
+    font-size: 0.85rem !important;
   }
 }

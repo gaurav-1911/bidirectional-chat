@@ -1,61 +1,91 @@
+/* ==========================================================================
+   UnifiedPicker.css
+   Desktop & Universal Styles for Emoji and GIF Picker
+   ========================================================================== */
+
 .unified-picker-container {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
 }
 
 .unified-picker-popup {
   position: absolute;
-  bottom: 100%;
+  bottom: calc(100% + 10px);
   right: 0;
-  z-index: 100;
-  margin-bottom: 10px;
-  background-color: var(--secondary-bg, #202225);
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  width: 352px;
+  height: 420px;
+  background-color: var(--sidebar-bg, #0f172a);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  animation: pickerFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pickerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .picker-tabs {
   display: flex;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: var(--tertiary-bg, #2f3136);
+  background-color: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  padding: 4px;
+  gap: 4px;
 }
 
 .picker-tab {
   flex: 1;
-  padding: 12px 16px;
-  background: none;
+  padding: 8px 12px;
+  background: transparent;
   border: none;
-  color: #b9bbbe;
-  font-size: 14px;
-  font-weight: 500;
+  border-radius: 8px;
+  color: var(--text-muted, #94a3b8);
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
+  transition: all 0.15s ease;
+  touch-action: manipulation;
 }
 
 .picker-tab:hover {
   color: #fff;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
 .picker-tab.active {
   color: #fff;
-}
-
-.picker-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--accent-color, #5865F2);
+  background: var(--accent-gradient, linear-gradient(135deg, #6366f1 0%, #a855f7 100%));
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
 
 .picker-content {
-  background-color: var(--secondary-bg, #202225);
+  flex: 1;
+  height: calc(100% - 44px);
+  overflow: hidden;
+  background-color: var(--bg-dark, #0b1120);
+  display: flex;
+  flex-direction: column;
+}
+
+em-emoji-picker {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  --rgb-background: 11, 17, 32;
+  --rgb-input: 30, 41, 59;
+  --rgb-color: 248, 250, 252;
+  --border-radius: 12px;
 }

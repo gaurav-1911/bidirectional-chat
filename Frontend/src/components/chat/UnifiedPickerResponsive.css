@@ -3,52 +3,65 @@
    Responsive Styles for Unified Emoji & GIF Picker Component
    ========================================================================== */
 
-/* Mobile (< 768px) */
+/* Mobile & Tablet (< 768px) */
 @media screen and (max-width: 767px) {
-  .unified-picker-container {
+  .unified-picker-popup {
     position: fixed !important;
-    bottom: 64px !important;
+    bottom: 66px !important;
     left: 8px !important;
     right: 8px !important;
-    width: calc(100% - 16px) !important;
-    max-width: 100% !important;
-    height: 380px !important;
-    max-height: 50vh !important;
-    border-radius: 16px !important;
+    width: auto !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+    height: 390px !important;
+    max-height: 52vh !important;
+    border-radius: 18px !important;
     z-index: 1050 !important;
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12)) !important;
   }
 
   .picker-tabs {
-    padding: 6px 10px !important;
+    padding: 6px !important;
     gap: 6px !important;
   }
 
-  .picker-tab-btn {
-    font-size: 0.82rem !important;
-    padding: 6px 12px !important;
-    min-height: 36px !important;
+  .picker-tab {
+    font-size: 0.85rem !important;
+    padding: 8px 12px !important;
+    min-height: 38px !important;
   }
 
-  /* Emoji Mart responsive sizing */
   em-emoji-picker {
-    --category-icon-size: 18px;
-    --font-size: 14px;
+    --category-icon-size: 20px;
+    --font-size: 15px;
     width: 100% !important;
     max-width: 100% !important;
     height: 100% !important;
   }
 }
 
-/* 1. Small Mobile (320px - 374px) */
-@media screen and (max-width: 374px) {
-  .unified-picker-container {
+/* 1. Small Mobile (<= 320px) */
+@media screen and (max-width: 320px) {
+  .unified-picker-popup {
     height: 320px !important;
     bottom: 56px !important;
+    left: 4px !important;
+    right: 4px !important;
+    border-radius: 14px !important;
   }
 
-  .picker-tab-btn {
-    font-size: 0.75rem !important;
-    padding: 4px 8px !important;
+  .picker-tab {
+    font-size: 0.78rem !important;
+    padding: 6px 8px !important;
+    min-height: 34px !important;
+  }
+}
+
+/* 2. Standard & Large Mobile (321px - 420px) */
+@media screen and (min-width: 321px) and (max-width: 420px) {
+  .unified-picker-popup {
+    height: 360px !important;
+    bottom: 60px !important;
   }
 }

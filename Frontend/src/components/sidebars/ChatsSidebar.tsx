@@ -24,6 +24,7 @@ export function ChatsSidebar({
   refreshTrigger = 0,
 }: ChatsSidebarProps) {
   const [recentChats, setRecentChats] = useState<RecentChatUser[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
   const fetchRecentChats = async () => {
@@ -83,19 +84,57 @@ export function ChatsSidebar({
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  const filteredChats = recentChats.filter((chat) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase().trim();
+    return (
+      chat.user.username.toLowerCase().includes(q) ||
+      (chat.lastMessage && chat.lastMessage.toLowerCase().includes(q))
+    );
+  });
+
   return (
     <div className="sidebar-container">
       <div className="sidebar-logo">
         <h2>Chats</h2>
       </div>
 
+      {/* Responsive Search Input */}
+      <div className="sidebar-search-form">
+        <div className="sidebar-search-wrapper">
+          <svg className="sidebar-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input
+            type="text"
+            className="sidebar-search-input"
+            placeholder="Search direct chats..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              className="clear-search-btn"
+              onClick={() => setSearchQuery('')}
+              title="Clear search"
+            >
+              ✖
+            </button>
+          )}
+        </div>
+      </div>
+
       <div className="friends-list">
         {loading ? (
           <div className="loading-text">Loading chats...</div>
-        ) : recentChats.length === 0 ? (
-          <div className="no-users-text">No chats yet. Go to People to start one!</div>
+        ) : filteredChats.length === 0 ? (
+          <div className="no-users-text">
+            {searchQuery ? 'No chats found matching your search.' : 'No chats yet. Go to People to start one!'}
+          </div>
         ) : (
-          recentChats.map((chat) => {
+          filteredChats.map((chat) => {
             const friend = chat.user;
             const isSelected = String(selectedFriend?._id) === String(friend._id);
             const isOnline = onlineUserIds.some((id) => String(id) === String(friend._id));

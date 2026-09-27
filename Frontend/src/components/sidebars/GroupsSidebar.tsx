@@ -23,6 +23,7 @@ export function GroupsSidebar({
   refreshTrigger = 0,
 }: GroupsSidebarProps) {
   const [groups, setGroups] = useState<RecentGroup[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
   const fetchGroups = async () => {
@@ -59,7 +60,7 @@ export function GroupsSidebar({
   // Listen to new messages to re-fetch/reorder groups
   useEffect(() => {
     if (latestMessage && latestMessage.groupId) {
-      fetchGroups(); // Simple approach: refetch when group message arrives
+      fetchGroups();
     }
   }, [latestMessage]);
 
@@ -79,12 +80,22 @@ export function GroupsSidebar({
     return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
   };
 
+  const filteredGroups = groups.filter((item) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase().trim();
+    return (
+      item.group.name.toLowerCase().includes(q) ||
+      (item.lastMessage && item.lastMessage.toLowerCase().includes(q))
+    );
+  });
+
   return (
     <div className="sidebar-container">
       <div className="sidebar-logo" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2>Groups</h2>
         <button 
           onClick={onCreateGroupClick}
+          className="create-group-btn"
           style={{ 
             width: '34px', 
             height: '34px', 
@@ -99,14 +110,6 @@ export function GroupsSidebar({
             boxShadow: '0 3px 10px rgba(99, 102, 241, 0.35)',
             transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = 'translateY(-1px) scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(99, 102, 241, 0.5)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = 'translateY(0) scale(1)';
-            e.currentTarget.style.boxShadow = '0 3px 10px rgba(99, 102, 241, 0.35)';
-          }}
           title="Create Group"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -116,13 +119,42 @@ export function GroupsSidebar({
         </button>
       </div>
 
+      {/* Responsive Search Input */}
+      <div className="sidebar-search-form">
+        <div className="sidebar-search-wrapper">
+          <svg className="sidebar-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input
+            type="text"
+            className="sidebar-search-input"
+            placeholder="Search groups..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              className="clear-search-btn"
+              onClick={() => setSearchQuery('')}
+              title="Clear search"
+            >
+              ✖
+            </button>
+          )}
+        </div>
+      </div>
+
       <div className="friends-list">
         {loading ? (
           <div className="loading-text">Loading groups...</div>
-        ) : groups.length === 0 ? (
-          <div className="no-users-text">You are not part of any groups yet.</div>
+        ) : filteredGroups.length === 0 ? (
+          <div className="no-users-text">
+            {searchQuery ? 'No groups found matching your search.' : 'You are not part of any groups yet.'}
+          </div>
         ) : (
-          groups.map((item) => {
+          filteredGroups.map((item) => {
             const { group, lastMessage, lastMessageTime } = item;
             const unreadCount = unreadCounts[group._id] || 0;
             const isSelected = selectedGroup?._id === group._id;
@@ -140,30 +172,22 @@ export function GroupsSidebar({
                     group.name.charAt(0).toUpperCase()
                   )}
                 </div>
-                <div className="friend-info">
-                  <div className="friend-name-row">
-                    <span className="friend-name">{group.name}</span>
-                    {lastMessageTime && (
-                      <span className="last-message-time">{formatTime(lastMessageTime)}</span>
-                    )}
+                <div className="friend-info" style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="friend-name" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{group.name}</div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{formatTime(lastMessageTime)}</div>
                   </div>
-                  <div className="friend-status-row">
-                    <span className="last-message-text" style={{ 
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      maxWidth: '160px',
-                      color: lastMessage === '🚫 This message was deleted' ? 'rgba(255, 255, 255, 0.4)' : 'inherit',
-                      fontStyle: lastMessage === '🚫 This message was deleted' ? 'italic' : 'normal',
-                      display: 'inline-block'
-                    }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', paddingRight: '8px' }}>
                       {lastMessage || 'No messages yet'}
-                    </span>
-                    {unreadCount > 0 && (
-                      <span className="unread-badge">{unreadCount}</span>
-                    )}
+                    </div>
                   </div>
                 </div>
+                {unreadCount > 0 && (
+                  <div className="unread-badge">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </div>
+                )}
               </div>
             );
           })

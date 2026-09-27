@@ -274,6 +274,7 @@ export default function App() {
 
   // Logged in – show main app layout
   const hasSelectedTarget = (activeTab === 'chats' && !!selectedFriend) || (activeTab === 'groups' && !!selectedGroup);
+  const totalUnreadCount = Object.values(unreadCounts).reduce((a, b) => a + b, 0);
 
   return (
     <div className={`app-layout ${hasSelectedTarget ? 'has-selected-target' : ''}`}>
@@ -289,7 +290,9 @@ export default function App() {
           setSettingsCategory('profile');
           setActiveTab('settings');
         }}
+        onLogout={handleLogout}
         currentUser={currentUser} 
+        unreadCountTotal={totalUnreadCount}
       />
 
       {activeTab === 'chats' && (

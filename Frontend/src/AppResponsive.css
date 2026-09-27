@@ -36,7 +36,7 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Base App Layout (Mobile First: column with bottom nav clearance) */
+/* Base App Layout (Mobile First: column with zero unwanted padding) */
 .app-layout {
   display: flex;
   flex-direction: column;
@@ -46,6 +46,7 @@ html, body {
   overflow: hidden;
   position: relative;
   background-color: var(--bg-dark, #0b1120);
+  padding-bottom: 0 !important;
 }
 
 /* Common Container Fluid Constraints */
@@ -87,10 +88,6 @@ button, input, select, textarea {
   :root {
     --chat-font-size: 0.80rem;
     --touch-target-min: 40px;
-  }
-
-  .app-layout {
-    padding-bottom: 54px;
   }
 
   h1, .landing-hero-title {
@@ -152,10 +149,6 @@ button, input, select, textarea {
     --chat-font-size: 0.84rem;
   }
 
-  .app-layout {
-    padding-bottom: 56px;
-  }
-
   h1, .landing-hero-title {
     font-size: 1.65rem !important;
     line-height: 1.2 !important;
@@ -190,10 +183,6 @@ button, input, select, textarea {
     --chat-font-size: 0.88rem;
   }
 
-  .app-layout {
-    padding-bottom: 58px;
-  }
-
   h1, .landing-hero-title {
     font-size: 1.85rem !important;
   }
@@ -216,10 +205,6 @@ button, input, select, textarea {
     --chat-font-size: 0.90rem;
   }
 
-  .app-layout {
-    padding-bottom: 60px;
-  }
-
   h1, .landing-hero-title {
     font-size: 2.1rem !important;
   }
@@ -230,14 +215,14 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   Mobile & Tablet Master Mode Switch (< 768px): Dual Pane Visibility Controller
+   Mobile Master Mode Switch (< 768px): Single Pane Visibility Controller
    ========================================================================== */
 @media screen and (max-width: 767px) {
   .app-layout {
     flex-direction: column;
   }
 
-  /* When a chat target or call is active on mobile, view chat full screen */
+  /* When a chat target is active on mobile, view chat window full screen */
   .app-layout.has-selected-target .sidebar-container {
     display: none !important;
   }
@@ -246,10 +231,10 @@ button, input, select, textarea {
     display: flex !important;
     width: 100vw !important;
     min-width: 100vw !important;
-    height: calc(100dvh - 60px) !important;
+    height: 100dvh !important;
   }
 
-  /* When no chat target is active on mobile, view sidebar full screen */
+  /* When no chat target is active on mobile, view sidebar full screen with top navbar */
   .app-layout:not(.has-selected-target) .chat-window {
     display: none !important;
   }
@@ -259,7 +244,7 @@ button, input, select, textarea {
     width: 100vw !important;
     min-width: 100vw !important;
     max-width: 100vw !important;
-    height: calc(100dvh - 60px) !important;
+    height: calc(100dvh - 56px) !important;
   }
 }
 
@@ -286,7 +271,7 @@ button, input, select, textarea {
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .app-layout {
     flex-direction: row;
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
 
   .sidebar-container {
@@ -317,7 +302,7 @@ button, input, select, textarea {
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
   .app-layout {
     flex-direction: row;
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
 
   .sidebar-container {
@@ -348,7 +333,7 @@ button, input, select, textarea {
 @media screen and (min-width: 1441px) {
   .app-layout {
     flex-direction: row;
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
 
   .sidebar-container {
