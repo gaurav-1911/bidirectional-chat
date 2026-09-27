@@ -1,170 +1,207 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { askChatbotApi, ChatbotMessage } from '../../services/chatbotService';
 import './WebsiteBotWidget.css';
 import './WebsiteBotWidgetResponsive.css';
 
-interface BotMessage {
-  id: string;
-  sender: 'bot' | 'user';
-  text: string;
-  time: string;
-}
-
-const INITIAL_GREETING: BotMessage = {
-  id: 'init-1',
+const INITIAL_GREETING: ChatbotMessage = {
+  id: 'init-msg-1',
   sender: 'bot',
-  text: "👋 Hi there! I'm your **Chat Application AI Assistant**. I can answer any questions specifically about this platform—including real-time chat, WebRTC video/voice calls, group conversations, live monitoring, security, and technical architecture. How can I help you today?",
+  text: "👋 Hi there! I'm your **Chat Application AI Assistant**.\n\nI can assist you specifically with our **Bidirectional Real-Time Chat & Video Calling platform**—including real-time messaging, WebRTC calling, group conversations, live monitoring, security, and technical architecture.\n\nHow can I help you today?",
   time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  suggestedQuestions: [
+    'How does real-time chat work?',
+    'How do voice & video calls work?',
+    'Can I create group chats?',
+    'What is Live Monitoring?',
+    'How is authentication secured?',
+    'What tech stack is used?',
+  ],
 };
-
-const QUICK_SUGGESTIONS = [
-  'How does real-time chat work?',
-  'How do voice & video calls work?',
-  'Can I create group chats?',
-  'What is Live Monitoring?',
-  'How is authentication secured?',
-  'Can I share images and voice notes?',
-  'What tech stack is used?',
-];
 
 export const WebsiteBotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<BotMessage[]>([INITIAL_GREETING]);
+  const [messages, setMessages] = useState<ChatbotMessage[]>(() => {
+    const saved = sessionStorage.getItem('chatapp_bot_messages');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (e) {
+        // Fall back to initial greeting
+      }
+    }
+    return [INITIAL_GREETING];
+  });
+
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [activeSuggestions, setActiveSuggestions] = useState<string[]>(
+    INITIAL_GREETING.suggestedQuestions || []
+  );
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const scrollToBottom = () => {
+  // Sync with session storage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('chatapp_bot_messages', JSON.stringify(messages));
+    } catch (e) {
+      // Storage quota or error
+    }
+  }, [messages]);
+
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      scrollToBottom();
+      setTimeout(() => inputRef.current?.focus(), 150);
+    }
+  }, [isOpen, messages, isTyping, scrollToBottom]);
+
+  // Handle horizontal mouse wheel on suggestion chips
   const handleSuggestionsWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (suggestionsRef.current && e.deltaY !== 0) {
       suggestionsRef.current.scrollLeft += e.deltaY * 0.8;
     }
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      scrollToBottom();
-    }
-  }, [messages, isOpen, isTyping]);
+  const handleSend = async (customText?: string) => {
+    const query = (customText || inputText).trim();
+    if (!query || isTyping) return;
 
-  const generateAnswer = (query: string): string => {
-    const q = query.toLowerCase().trim();
-
-    // 1. Greetings & identity
-    if (/^(hi|hello|hey|greetings|hola|namaste|good\s*(morning|afternoon|evening)|who are you|what is this)/i.test(q)) {
-      return "Hello! I am the official AI Assistant for this **Bidirectional Real-Time Chat & Video Calling Application**. I can answer any question about our messaging features, WebRTC calling, group collaboration, live monitoring, security, or technology stack. What would you like to explore?";
-    }
-
-    // 2. Real-time messaging & Socket.io
-    if (/real-?time|socket|websocket|message|chat|instant|broadcast|delay|latency/i.test(q) && !/video|call|monitor|group/i.test(q)) {
-      return "💬 **Real-Time Messaging:**\nOur app uses **Socket.IO over WebSockets** for instant, bidirectional message delivery with zero page refreshes. Features include:\n• Instant delivery & read receipts (ticks)\n• Real-time typing indicators\n• Emoji reactions & Giphy GIF picker\n• In-chat voice audio recording\n• File attachments (images, videos, documents)\n• Edit and delete messages (for me / for everyone)";
-    }
-
-    // 3. Voice and Video Calling & WebRTC
-    if (/call|video|audio|voice|webrtc|screen\s*share|camera|mic|stream/i.test(q)) {
-      return "📞 **Voice & Video Calling:**\nBuilt with **peer-to-peer WebRTC**:\n• **1-on-1 and Group Calls**: High-definition crystal-clear audio and video.\n• **Screen Sharing**: Broadcast your screen in real time with built-in consent.\n• **In-Call Controls**: Instant microphone mute, camera toggle, and dynamic participant video grids with PiP (Picture-in-Picture).\n• **ICE & STUN/TURN**: Optimized connection negotiation for low-latency peer streaming.";
-    }
-
-    // 4. Group Chats
-    if (/group|channel|community|members|admin|create group/i.test(q)) {
-      return "👥 **Group Conversations:**\n• Create custom groups with custom group avatars and member lists.\n• Real-time multi-user group chat broadcasting.\n• Group details modal to view members, add new participants, assign admin roles, or leave the group.\n• Unread counters and synchronized group activity logs.";
-    }
-
-    // 5. Live Monitoring
-    if (/monitor|live monitoring|screen\s*watch|spy|streamer|screenshot|remote view/i.test(q)) {
-      return "🛡️ **Live User Monitoring:**\n• Provides a specialized administrative dashboard to view active online users.\n• **Explicit User Consent**: Users must explicitly accept screen-share consent requests before any live screen stream begins.\n• Captures real-time stream status, connection health, and periodic screenshot records stored securely.";
-    }
-
-    // 6. Security, Authentication, Passwords & JWT
-    if (/auth|security|login|register|signup|jwt|token|password|hash|bcrypt|google|oauth|session|safe|encrypt/i.test(q)) {
-      return "🔒 **Enterprise-Grade Security & Authentication:**\n• **JWT Authentication**: Short-lived access tokens (15m) paired with 7-day refresh token rotation.\n• **Password Hashing**: Passwords are encrypted with Bcrypt and multi-round salting.\n• **Google OAuth SSO**: One-tap sign in with verified Google accounts.\n• **Security Headers & Protection**: Integrated Helmet headers, Rate limiting, CORS whitelist, and XSS sanitization.";
-    }
-
-    // 7. Email Verification & OTP
-    if (/otp|email|verification|nodemailer|smtp|code|2fa/i.test(q)) {
-      return "📧 **Email OTP Verification:**\n• Integrated with **Nodemailer SMTP** (Gmail).\n• Delivers secure 6-digit one-time passwords directly to your registered email for account verification and password resets.";
-    }
-
-    // 8. Files, Media, GIFs & Emojis
-    if (/file|image|photo|audio|upload|media|gif|giphy|emoji|picker/i.test(q)) {
-      return "📁 **Media & Rich Expressions:**\n• **File Uploads**: Send photos, videos, and document attachments with automated MIME validation.\n• **Voice Notes**: In-browser audio recorder with interactive waveform playback.\n• **Unified Picker**: Integrated EmojiMart and Giphy GIF search modal.";
-    }
-
-    // 9. Settings & Customization
-    if (/setting|theme|dark\s*mode|light\s*mode|privacy|wallpaper|notification|sound/i.test(q)) {
-      return "⚙️ **Customization & Privacy Settings:**\n• **Themes**: Seamless toggle between Dark and Light mode with customizable accent themes.\n• **Privacy Controls**: Adjust online visibility, last seen status, and manage blocked users.\n• **Sound & Notifications**: Customize incoming message/call ringtones and desktop alerts.";
-    }
-
-    // 10. Technology Stack & Architecture
-    if (/tech|stack|backend|frontend|database|mongodb|redis|vite|react|node|typescript|library/i.test(q)) {
-      return "⚡ **Technology Architecture:**\n• **Frontend**: React 18, TypeScript, Vite, Vanilla CSS design system.\n• **Backend**: Node.js, Express, TypeScript, Socket.IO, Pino logger, Helmet.\n• **Database**: MongoDB Atlas with Mongoose ODM.\n• **Cache & Multi-Server**: Optional Redis adapter for multi-instance scaling.";
-    }
-
-    // 11. Contact / Support
-    if (/contact|support|email address|developer|author|gaurav/i.test(q)) {
-      return "📬 **Contact & Support:**\nFor inquiries or support, you can reach out via official contact at:\n📧 **gauravbhai1911@gmail.com**\nor connect via GitHub: `https://github.com/gaurav-1911/bidirectional-chat`";
-    }
-
-    // 12. How to start / Sign up
-    if (/how to start|get started|how to use|join|try/i.test(q)) {
-      return "🚀 **Getting Started:**\n1. Click the **'Get Started Free'** or **'Sign In'** button on this page.\n2. Create an account with your username, email, and password (or use Google Sign-In).\n3. Once logged in, explore people in the People tab or invite friends to start chatting and calling instantly!";
-    }
-
-    // Strict Boundary Rejection for unrelated queries
-    return "⚠️ **Out of Scope:**\nI am specifically programmed to answer questions **only about this Chat Application and its website features** (e.g., messaging, WebRTC calling, groups, security, settings, or technology stack).\n\nPlease feel free to ask any question regarding our chat application!";
-  };
-
-  const handleSend = (textToSend?: string) => {
-    const query = textToSend || inputText;
-    if (!query.trim()) return;
-
-    const userMsg: BotMessage = {
+    const userMsg: ChatbotMessage = {
       id: `user-${Date.now()}`,
       sender: 'user',
-      text: query.trim(),
+      text: query,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
-    setMessages((prev) => [...prev, userMsg]);
-    if (!textToSend) setInputText('');
+    const newHistory = [...messages, userMsg];
+    setMessages(newHistory);
+    if (!customText) setInputText('');
     setIsTyping(true);
 
-    // Realistic bot response delay
-    setTimeout(() => {
-      const botReplyText = generateAnswer(query);
-      const botMsg: BotMessage = {
+    try {
+      // Prepare context history for API
+      const historyForApi = newHistory.map((m) => ({
+        sender: m.sender,
+        text: m.text,
+      }));
+
+      const res = await askChatbotApi(query, historyForApi);
+
+      const botMsg: ChatbotMessage = {
         id: `bot-${Date.now()}`,
         sender: 'bot',
-        text: botReplyText,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        text: res.answer,
+        time: res.timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        intent: res.intent,
+        suggestedQuestions: res.suggestedQuestions,
       };
+
       setMessages((prev) => [...prev, botMsg]);
+      if (res.suggestedQuestions && res.suggestedQuestions.length > 0) {
+        setActiveSuggestions(res.suggestedQuestions);
+      }
+    } catch (error) {
+      const errorMsg: ChatbotMessage = {
+        id: `err-${Date.now()}`,
+        sender: 'bot',
+        text: "I'm having trouble processing your request right now. Please try again or rephrase your question about our Chat Application.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isError: true,
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 600);
+    }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
+  const handleCopy = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleClear = () => {
+    setMessages([INITIAL_GREETING]);
+    setActiveSuggestions(INITIAL_GREETING.suggestedQuestions || []);
+    sessionStorage.removeItem('chatapp_bot_messages');
+  };
+
+  const handleRetry = (lastQuery: string) => {
+    handleSend(lastQuery);
+  };
+
+  // Simple Markdown-to-JSX renderer for bold, lists, and code blocks
+  const renderFormattedText = (text: string) => {
+    const lines = text.split('\n');
+    return lines.map((line, lineIdx) => {
+      // Parse bold tags **text**
+      const parts = line.split(/(\*\*.*?\*\*)/g);
+
+      const formattedLine = parts.map((part, partIdx) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return (
+            <strong key={partIdx} className="website-bot-strong">
+              {part.slice(2, -2)}
+            </strong>
+          );
+        }
+        return part;
+      });
+
+      // Render bullet lines with styling
+      if (line.trim().startsWith('•')) {
+        return (
+          <div key={lineIdx} className="website-bot-bullet-line">
+            {formattedLine}
+          </div>
+        );
+      }
+
+      // Render numbered step lines
+      if (/^\d+\.\s/.test(line.trim())) {
+        return (
+          <div key={lineIdx} className="website-bot-step-line">
+            {formattedLine}
+          </div>
+        );
+      }
+
+      return (
+        <div key={lineIdx} className="website-bot-paragraph-line">
+          {formattedLine || '\u00A0'}
+        </div>
+      );
+    });
+  };
+
   return (
     <div className="website-bot-widget-container">
-      {/* 1. Floating Toggle Button */}
+      {/* 1. Floating Launcher Button */}
       <button
         className="website-bot-trigger-btn"
         onClick={() => setIsOpen(!isOpen)}
-        title={isOpen ? 'Close AI Assistant' : 'Chat with AI Assistant'}
-        aria-label="Chat with AI Assistant"
+        title={isOpen ? 'Close AI Assistant' : 'Open ChatApp AI Assistant'}
+        aria-label="ChatApp AI Assistant"
       >
         <span className="website-bot-pulse-dot" />
         {isOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
@@ -177,9 +214,9 @@ export const WebsiteBotWidget: React.FC = () => {
         )}
       </button>
 
-      {/* 2. Interactive Bot Window */}
+      {/* 2. Interactive Enterprise Chatbot Window */}
       {isOpen && (
-        <div className="website-bot-window">
+        <div className="website-bot-window" role="dialog" aria-label="AI Assistant Window">
           {/* Header */}
           <div className="website-bot-header">
             <div className="website-bot-header-left">
@@ -197,22 +234,42 @@ export const WebsiteBotWidget: React.FC = () => {
                 <h4>ChatApp AI Assistant</h4>
                 <div className="website-bot-status-badge">
                   <span className="website-bot-status-indicator" />
-                  Website Guide & Help
+                  <span>Enterprise Knowledge Guide</span>
                 </div>
               </div>
             </div>
-            <button className="website-bot-close-btn" onClick={() => setIsOpen(false)} title="Close chat">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+
+            <div className="website-bot-header-actions">
+              <button
+                className="website-bot-action-icon-btn"
+                onClick={handleClear}
+                title="Clear Conversation History"
+                aria-label="Clear chat"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 6h18" />
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                </svg>
+              </button>
+              <button
+                className="website-bot-close-btn"
+                onClick={() => setIsOpen(false)}
+                title="Minimize AI Assistant"
+                aria-label="Close chat"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Messages Stream */}
           <div className="website-bot-messages">
-            {messages.map((m) => (
-              <div key={m.id} className={`website-bot-msg-row ${m.sender}`}>
+            {messages.map((m, idx) => (
+              <div key={m.id} className={`website-bot-msg-row ${m.sender} ${m.isError ? 'has-error' : ''}`}>
                 {m.sender === 'bot' && (
                   <div className="website-bot-msg-avatar">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
@@ -222,9 +279,44 @@ export const WebsiteBotWidget: React.FC = () => {
                     </svg>
                   </div>
                 )}
-                <div className="website-bot-msg-bubble">
-                  <div style={{ whiteSpace: 'pre-line' }}>{m.text}</div>
-                  <div className="website-bot-msg-time">{m.time}</div>
+                <div className="website-bot-msg-bubble-container">
+                  <div className="website-bot-msg-bubble">
+                    <div className="website-bot-msg-content">{renderFormattedText(m.text)}</div>
+                    <div className="website-bot-msg-meta">
+                      <span className="website-bot-msg-time">{m.time}</span>
+                      {m.sender === 'bot' && (
+                        <button
+                          className="website-bot-copy-btn"
+                          onClick={() => handleCopy(m.id, m.text)}
+                          title="Copy response"
+                        >
+                          {copiedId === m.id ? (
+                            <span className="copied-tag">Copied!</span>
+                          ) : (
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                            </svg>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {m.isError && idx === messages.length - 1 && (
+                    <button
+                      className="website-bot-retry-btn"
+                      onClick={() => {
+                        const lastUser = [...messages].reverse().find((x) => x.sender === 'user');
+                        if (lastUser) handleRetry(lastUser.text);
+                      }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                      </svg>
+                      Retry Request
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -247,24 +339,27 @@ export const WebsiteBotWidget: React.FC = () => {
           </div>
 
           {/* Quick Questions Suggestions */}
-          <div className="website-bot-suggestions-area">
-            <span className="website-bot-suggestions-label">Suggested Questions:</span>
-            <div
-              ref={suggestionsRef}
-              onWheel={handleSuggestionsWheel}
-              className="website-bot-suggestions-scroll"
-            >
-              {QUICK_SUGGESTIONS.map((q, idx) => (
-                <button
-                  key={idx}
-                  className="website-bot-chip-btn"
-                  onClick={() => handleSend(q)}
-                >
-                  {q}
-                </button>
-              ))}
+          {activeSuggestions.length > 0 && (
+            <div className="website-bot-suggestions-area">
+              <span className="website-bot-suggestions-label">Suggested Inquiries:</span>
+              <div
+                ref={suggestionsRef}
+                onWheel={handleSuggestionsWheel}
+                className="website-bot-suggestions-scroll"
+              >
+                {activeSuggestions.map((q, idx) => (
+                  <button
+                    key={idx}
+                    className="website-bot-chip-btn"
+                    onClick={() => handleSend(q)}
+                    disabled={isTyping}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Input Box Form */}
           <form
@@ -274,19 +369,22 @@ export const WebsiteBotWidget: React.FC = () => {
               handleSend();
             }}
           >
-            <input
-              type="text"
+            <textarea
+              ref={inputRef}
+              rows={1}
               className="website-bot-input"
               placeholder="Ask anything about our Chat App..."
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={handleKeyDown}
+              disabled={isTyping}
             />
             <button
               type="submit"
               className="website-bot-send-btn"
-              disabled={!inputText.trim()}
-              title="Send message"
+              disabled={!inputText.trim() || isTyping}
+              title="Send inquiry"
+              aria-label="Send message"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13" />

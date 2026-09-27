@@ -14,6 +14,7 @@ import groupRoutes from './routes/group.routes';
 import callRoutes from './routes/call.routes';
 import settingsRoutes from './routes/settings.routes';
 import monitoringRoutes from './routes/monitoring.routes';
+import chatbotRoutes from './routes/chatbot.routes';
 import { logger } from './utils/logger';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
@@ -85,6 +86,7 @@ app.use('/api/groups', groupRoutes);
 app.use('/api/calls', callRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/monitoring', monitoringRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 // Global Error Handler Middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
