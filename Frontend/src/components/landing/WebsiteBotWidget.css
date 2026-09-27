@@ -172,7 +172,7 @@
   color: #f87171;
 }
 
-/* Messages List Area */
+/* Messages List Custom Modern Scrollbar */
 .website-bot-messages {
   flex: 1;
   overflow-y: auto;
@@ -180,6 +180,36 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.45) rgba(15, 23, 42, 0.4);
+}
+
+.website-bot-messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+.website-bot-messages::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 999px;
+  margin: 6px 0;
+}
+
+.website-bot-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.25s ease;
+}
+
+.website-bot-messages::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #818cf8 0%, #a855f7 100%);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
+}
+
+.website-bot-messages::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .website-bot-msg-row {
@@ -236,14 +266,16 @@
   text-align: right;
 }
 
-/* Quick Suggestion Chips */
+/* Quick Suggestion Chips with Ultra-Sleek Modern Scrollbar */
 .website-bot-suggestions-area {
-  padding: 8px 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(15, 23, 42, 0.6);
+  padding: 8px 14px 10px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
+  position: relative;
 }
 
 .website-bot-suggestions-label {
@@ -256,17 +288,53 @@
 
 .website-bot-suggestions-scroll {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  overflow-y: hidden;
+  padding-bottom: 7px;
+  padding-top: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.5) rgba(15, 23, 42, 0.5);
+}
+
+/* Ultra-Sleek WebKit Horizontal Scrollbar for Chips */
+.website-bot-suggestions-scroll::-webkit-scrollbar {
+  height: 4.5px;
+}
+
+.website-bot-suggestions-scroll::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 999px;
+  margin: 0 4px;
+}
+
+.website-bot-suggestions-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+.website-bot-suggestions-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #818cf8 0%, #ec4899 100%);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.7);
+}
+
+.website-bot-suggestions-scroll::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .website-bot-chip-btn {
   background: rgba(99, 102, 241, 0.12);
   border: 1px solid rgba(99, 102, 241, 0.25);
   color: #c7d2fe;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 9999px;
   font-size: 0.76rem;
   white-space: nowrap;

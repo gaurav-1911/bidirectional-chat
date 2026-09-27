@@ -32,9 +32,16 @@ export const WebsiteBotWidget: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSuggestionsWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (suggestionsRef.current && e.deltaY !== 0) {
+      suggestionsRef.current.scrollLeft += e.deltaY * 0.8;
+    }
   };
 
   useEffect(() => {
@@ -242,7 +249,11 @@ export const WebsiteBotWidget: React.FC = () => {
           {/* Quick Questions Suggestions */}
           <div className="website-bot-suggestions-area">
             <span className="website-bot-suggestions-label">Suggested Questions:</span>
-            <div className="website-bot-suggestions-scroll">
+            <div
+              ref={suggestionsRef}
+              onWheel={handleSuggestionsWheel}
+              className="website-bot-suggestions-scroll"
+            >
               {QUICK_SUGGESTIONS.map((q, idx) => (
                 <button
                   key={idx}
